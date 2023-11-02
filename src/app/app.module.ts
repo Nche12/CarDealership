@@ -11,6 +11,9 @@ import { SupportComponent } from './views/support/support.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { CustomSidenavComponent } from './views/custom-sidenav/custom-sidenav.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
     DashboardComponent,
     InventoryComponent,
     AnalyticsComponent,
-    SupportComponent
+    SupportComponent,
+    CustomSidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,9 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
