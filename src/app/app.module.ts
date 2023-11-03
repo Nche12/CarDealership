@@ -15,6 +15,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { CustomSidenavComponent } from './views/custom-sidenav/custom-sidenav.component';
 import { MatListModule } from '@angular/material/list';
 import { FooterComponent } from './views/footer/footer.component';
+import { AccumulationChartAllModule, ChartAllModule, ChartModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
+import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { DashboardLayoutModule } from '@syncfusion/ej2-angular-layouts';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,18 @@ import { FooterComponent } from './views/footer/footer.component';
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    ChartModule,
+
+
+    ChartAllModule,
+    RangeNavigatorAllModule,
+    ButtonModule,
+    AccumulationChartAllModule,
+    NumericTextBoxModule,
+    // DatePickerModule,
+    // DropDownListAllModule,
+    DashboardLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
