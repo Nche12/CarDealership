@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CustomSidenavComponent } from './views/custom-sidenav/custom-sidenav.component';
 import { MatListModule } from '@angular/material/list';
+import { FooterComponent } from './views/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MatListModule } from '@angular/material/list';
     InventoryComponent,
     AnalyticsComponent,
     SupportComponent,
-    CustomSidenavComponent
+    CustomSidenavComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

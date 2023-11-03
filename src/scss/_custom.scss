@@ -8,12 +8,16 @@ mat-toolbar {
 }
 
 mat-sidenav-container {
-    height: calc(100vh - 64px);
+    height: calc(100vh - 64px);//64px(toolbar) 40px(footer)
 }
 
 mat-sidenav,
 mat-sidenav-content {
     transition: all 500ms ease-in-out;
+}
+
+.example-spacer {
+    flex: 1 1 auto !important;
 }
 
 .sidenav-header {
@@ -25,27 +29,38 @@ mat-sidenav-content {
         object-fit: cover;
         margin-bottom: 10px;
     }
+}
 
-    .header-text {
-        height: 3rem;
+.header-text {
+    height: 3rem;
 
-        >h2 {
-            margin: 0;
-            font-size: 1rem;
-            line-height: 1.5rem;
-        }
-
-        >p {
-            margin: 0;
-            font-size: 0.8rem;
-        }
+    div {
+        position: relative;
+        top: 50%;
+        transform: translate(-50%);
+        margin: 0;
+        font-size: 0.8rem;
+        line-height: 1rem;
+        text-align: center;
+        height: auto;
     }
+
+    // >h2 {
+    //     margin: 0;
+    //     font-size: 1rem;
+    //     line-height: 1.5rem;
+    // }
+
+    // >p {
+    //     margin: 0;
+    //     font-size: 0.8rem;
+    // }
 }
 
-.hide-header-text {
-    opacity: 0;
-    height: 0px !important;
-}
+// .hide-header-text {
+//     opacity: 0;
+//     height: 0px !important;
+// }
 
 .menu-item {
     border-left: 5px solid;
@@ -55,4 +70,19 @@ mat-sidenav-content {
 .selected-menu-item {
     border-left-color: var(--primary-color);
     background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+    text-align: center;
+    height: 3rem;
+    margin-left: -25px;
+}
+
+.footer-content{
+    margin-top: 25px;
+    
 }
