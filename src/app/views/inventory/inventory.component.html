@@ -1,1 +1,82 @@
-<p>inventory works!</p>
+<mat-card>
+    <div class="control-section">
+
+        <ejs-grid #overviewgrid id='overviewgrid' *ngIf="inventory$ | async as inventory else loading"
+            [dataSource]='inventory' rowHeight='38' [allowSelection]='true' [allowSorting]='true'
+            [allowPaging]="true" [allowResizing]="true" [pageSettings]='pageSettings' [filterSettings]='filter'
+            [allowFiltering]='true' (dataBound)="dataBound($event)" showColumnChooser='true' [toolbar]='toolbarOptions'
+            [allowPdfExport]='true' [allowExcelExport]='true' (rowSelected)="selected($event)"  (rowDataBound)="rowDataBound($event)"
+            (rowDeselected)="deSelected($event)" [editSettings]='editSettings' [selectionSettings]='selectionOptions'
+            (load)="onLoad()" (created)='onCreate($event)' [enableAltRow]="true" (toolbarClick)='toolbarClick($event)'
+            (queryCellInfo)='queryCellInfo($event)' (pdfQueryCellInfo)='pdfQueryCellInfo($event)' (columnChooserClose)='onColumnChooserClose()'
+            (excelQueryCellInfo)='excelQueryCellInfo($event)' (excelExportComplete)='excelExportComplete()'
+            (pdfExportComplete)='pdfExportComplete()' width="100%" height="500px">
+            <e-columns>
+                <e-column [showInColumnChooser]="false" type="checkbox" field='checkbox' [allowFiltering]='false'
+                    [allowSorting]='false' width='50'>
+                </e-column>
+
+                <e-column [visible]="false" field='id' headerText='File ID' [filter]='filter' isPrimaryKey="true"
+                    width='180' [showInColumnChooser]="true"></e-column>
+                <e-column field='carModel' headerText='Model' [filter]='filter' minWidth='180'></e-column>
+                <e-column field='colour' headerText='Colour' [filter]='filter' minWidth='140'></e-column>
+                <e-column field='mileage' headerText='mileage' [filter]='filter' width='180'></e-column>
+                <e-column field='comments' headerText='Comments' [filter]='filter' minWidth='140'></e-column>
+                <e-column field='advertisingPlatform' headerText='Ad Platform' [filter]='filter' minWidth='140'></e-column>
+                <e-column field='broughtDate' headerText='Brought Date' [filter]='filter' minWidth='140' [visible]="false"></e-column>
+                <e-column field='soldDate' headerText='Sold Date' [filter]='filter' minWidth='140'  [visible]="false"></e-column>
+                <e-column field='soldAmount' headerText='Sold Amount' [filter]='filter' width='180'></e-column>
+                <e-column field='client' headerText='Client' [filter]='filter' minWidth='140' [visible]="false"></e-column>
+                <e-column field='commissionAmount' headerText='Commission' [filter]='filter' minWidth='140' [visible]="false"></e-column>
+                <e-column field='user' headerText='Agent' [filter]='filter' minWidth='140'></e-column>
+                <e-column field='isSold' headerText='Sold' [filter]='filter' minWidth='140'></e-column>
+            </e-columns>
+            
+        </ejs-grid>
+
+
+        <ng-template #template let-data>
+            <button mat-button class="default-btn grey-icon-btn" (click)='onClick($event)'>
+                <mat-icon class="material-icons-outlined start-icon">filter_list</mat-icon>
+            </button>
+            <button mat-button class="action-btn ml-2 action" [matMenuTriggerFor]="exportMenu">
+                Export <mat-icon claass="end-icon">keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #exportMenu="matMenu" class="min-width-mat-menu">
+                <button mat-menu-item (click)="filterExport('Pdf')">
+                    <mat-icon class="material-icons-outlined">picture_as_pdf</mat-icon>
+                    <span>PDF</span>
+                </button>
+                <mat-divider></mat-divider>
+                <!-- <button mat-menu-item (click)="filterExport('print')">
+                    <mat-icon class="material-icons-outlined">print</mat-icon>
+                    <span>Print</span>
+                </button> -->
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="filterExport('excel')">
+                    <mat-icon class="material-icons-outlined">description</mat-icon>
+                    <span>Excel</span>
+                </button>
+            </mat-menu>
+
+            <button mat-button class="theme-btn ml-2" [matMenuTriggerFor]="filterMenu"
+                [ngClass]="{'archivedFiles': filtervalue == 'Archived Files', 'openFiles' : filtervalue == 'Open Files'   }">
+                {{ filtervalue }} <mat-icon claass="end-icon">filter_list</mat-icon>
+            </button>
+            <mat-menu #filterMenu="matMenu" class="min-width-mat-menu">
+                <button mat-menu-item (click)="filterTable('Active')" class="openFiles">Open Files</button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="filterTable('Inactive')" class="archivedFiles">Archived Files</button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="filterTable('All')" class="allFiles">All Files</button>
+            </mat-menu>
+
+        </ng-template>
+
+
+    </div>
+
+    <ng-template #loading>
+        <div>loading...</div>
+    </ng-template>
+</mat-card>
