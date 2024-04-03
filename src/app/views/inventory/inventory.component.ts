@@ -40,6 +40,7 @@ export class InventoryComponent implements OnInit {
 
   public currencySymbol: string = 'ZAR';
   public filtervalue: string = '';
+  public columnChooserOpened: boolean = false;
 
   constructor(private carsService: CarsService) {}
 
@@ -120,10 +121,22 @@ export class InventoryComponent implements OnInit {
 
   deSelected(args: any) {}
 
-  onClick(args: any) {}
+  onClick(args: any) {
+    console.log("Column Chooser Opened Command =>", this.columnChooserOpened);
+    this.overviewgrid.columnChooserModule.openColumnChooser(5, args.y / 3);
+    // when the column Chooser is closed, refresh the grid //
+    this.columnChooserOpened = true;
+    console.log("Column Chooser Opened =>", this.columnChooserOpened);
+
+ }
+
 
   onColumnChooserClose() {
-    console.log('Column Chooser Closed Command =>');
+  console.log("Column Chooser Closed Command =>");
+  if (this.columnChooserOpened) {
+  this.overviewgrid.refresh();
+  }
+  this.columnChooserOpened = false;
   }
 
   onCreate(args: any) {
