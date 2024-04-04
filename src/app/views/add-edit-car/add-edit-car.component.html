@@ -1,1 +1,100 @@
-<p>add-edit-car works!</p>
+<div>
+  <form [formGroup]="carForm">
+    <div class="row align-items-center stickysection">
+      <div class="col-md-6">
+        <h4 class="capitalize">{{ title }} Inventory</h4>
+      </div>
+
+      <div class="col-md-6 mt-md-0 text-right">
+        <button *ngIf="editMode" mat-raised-button class="theme-btn add-btn  m-1 mr-3" (click)="saveInventory()">
+            <mat-icon class="material-icons-outlined">save</mat-icon>
+            Save</button>
+        <button *ngIf="saveMode" mat-raised-button class="default-btn text-uppercase m-1 mr-3"
+        (click)="editInventory()">
+          <mat-icon class="material-icons-outlined">mode</mat-icon>
+          Edit
+        </button>
+      </div>
+    </div>
+
+    <div>
+        <mat-card class="tableOuterWrap">
+            <!-- <div class="tableFilterWrap">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <h5 class="text-light m-0 capitalize">{{ title }} Inventory</h5>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="row mt-3 justify-content-center">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Car Model</mat-label>
+                                <mat-select formControlName="carModelId" [disabled]="saveMode">
+                                    <mat-option *ngFor="let carModels of carModels$ | async"
+                                        [value]="carModels.id">{{carModels.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Mileage</mat-label>
+                                <input matInput placeholder="Mileage" formControlName="mileage"
+                                    type="number" min="0" [readonly]="saveMode">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Ad Platform</mat-label>
+                                <mat-select formControlName="carModelId" [disabled]="saveMode">
+                                    <mat-option *ngFor="let carModels of carModels$ | async"
+                                        [value]="carModels.id">{{carModels.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Brought Date</mat-label>
+                                <input placeholder="Brought Date" matInput [matDatepicker]="picker6"
+                                    formControlName="broughtDate" (focus)="picker6.open()" (click)="picker6.open()"
+                                    [readonly]="saveMode">
+                                <mat-datepicker-toggle matSuffix [for]="picker6" [disabled]="saveMode">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker6 [disabled]="saveMode"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Sold Date</mat-label>
+                                <input placeholder="Sold Date" matInput [matDatepicker]="picker7"
+                                    formControlName="soldDate" (focus)="picker7.open()"
+                                    (click)="picker7.open()" [readonly]="saveMode">
+                                <mat-datepicker-toggle matSuffix [for]="picker7" [disabled]="saveMode">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker7 [disabled]="saveMode"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Comments</mat-label>
+                                <textarea placeholder="Comments" matInput cdkTextareaAutosize
+                                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="15"
+                                    formControlName="comments" [readonly]="saveMode"></textarea>
+                            </mat-form-field>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+  </form>
+</div>

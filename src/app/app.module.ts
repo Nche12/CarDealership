@@ -25,6 +25,7 @@ import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { NgMaterialModule } from './views/ng-material/ng-material.module';
 import { NgSyncfusionModule } from './views/ng-syncfusion/ng-syncfusion.module';
 import { AddEditCarComponent } from './views/add-edit-car/add-edit-car.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { AddEditCarComponent } from './views/add-edit-car/add-edit-car.component
     NgMaterialModule,
     // NgSyncfusionModule,
 
-    GridAllModule
+    GridAllModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

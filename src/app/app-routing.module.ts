@@ -4,6 +4,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { SupportComponent } from './views/support/support.component';
 import { AnalyticsComponent } from './views/analytics/analytics.component';
 import { InventoryComponent } from './views/inventory/inventory.component';
+import { AddEditCarComponent } from './views/add-edit-car/add-edit-car.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'inventory',
     component: InventoryComponent
+  },
+  {
+    path: 'add_edit_inventory',
+    component: AddEditCarComponent
   },
   {
     path: 'analytics',

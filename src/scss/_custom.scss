@@ -114,3 +114,13 @@ mat-sidenav-content {
       transform: rotate(360deg);
     }
   }
+
+  .capitalize {
+    //Ensure that the word are separated
+    word-wrap: break-word;
+  }
+
+  .capitalize::first-letter{
+    //capitalize the first letter
+    text-transform: capitalize;
+  }

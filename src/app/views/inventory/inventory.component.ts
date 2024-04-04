@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { CarsService } from '../Services/Cars/cars.service';
+import { CarsService } from '../Services/CarsInventory/cars.service';
 import { IInventory } from '../Interface/interface';
 import { Observable, map } from 'rxjs';
 import {
@@ -14,6 +14,7 @@ import {
   VirtualScrollService,
 } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
@@ -42,7 +43,10 @@ export class InventoryComponent implements OnInit {
   public filtervalue: string = '';
   public columnChooserOpened: boolean = false;
 
-  constructor(private carsService: CarsService) {}
+  constructor(
+    private carsService: CarsService,
+     private router: Router
+     ) {}
 
   ngOnInit() {
     this.pageSettings = { pageSize: 25 };
@@ -63,9 +67,16 @@ export class InventoryComponent implements OnInit {
   }
 
   getInventory(refresh: boolean): void {
-    this.inventory$ = this.carsService.getInventory(refresh).pipe(
-      map((info:any) => info.data)
-    );
+    this.inventory$ = this.carsService
+      .getInventory(refresh)
+      .pipe(map((info: any) => info.data));
+  }
+
+  addInventory(add_edit: string) {
+    console.log('add or edit => ', add_edit);
+    this.router.navigate(['/add_edit_inventory'], {
+      queryParams: { action: add_edit },
+    });
   }
 
   filterTable(option: string) {
@@ -122,21 +133,19 @@ export class InventoryComponent implements OnInit {
   deSelected(args: any) {}
 
   onClick(args: any) {
-    console.log("Column Chooser Opened Command =>", this.columnChooserOpened);
+    console.log('Column Chooser Opened Command =>', this.columnChooserOpened);
     this.overviewgrid.columnChooserModule.openColumnChooser(5, args.y / 3);
     // when the column Chooser is closed, refresh the grid //
     this.columnChooserOpened = true;
-    console.log("Column Chooser Opened =>", this.columnChooserOpened);
-
- }
-
+    console.log('Column Chooser Opened =>', this.columnChooserOpened);
+  }
 
   onColumnChooserClose() {
-  console.log("Column Chooser Closed Command =>");
-  if (this.columnChooserOpened) {
-  this.overviewgrid.refresh();
-  }
-  this.columnChooserOpened = false;
+    console.log('Column Chooser Closed Command =>');
+    if (this.columnChooserOpened) {
+      this.overviewgrid.refresh();
+    }
+    this.columnChooserOpened = false;
   }
 
   onCreate(args: any) {
