@@ -35,8 +35,8 @@
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Car Model</mat-label>
                                 <mat-select formControlName="carModelId" [disabled]="saveMode">
-                                    <mat-option *ngFor="let carModels of carModels$ | async"
-                                        [value]="carModels.id">{{carModels.name}}</mat-option>
+                                    <mat-option *ngFor="let carModel of carModels$ | async"
+                                        [value]="carModel.id">{{carModel.name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -51,9 +51,9 @@
                         <div class="col-sm-6">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Ad Platform</mat-label>
-                                <mat-select formControlName="carModelId" [disabled]="saveMode">
-                                    <mat-option *ngFor="let carModels of carModels$ | async"
-                                        [value]="carModels.id">{{carModels.name}}</mat-option>
+                                <mat-select formControlName="advertisingPlatformId" [disabled]="saveMode">
+                                    <mat-option *ngFor="let adPlatform of adPlatforms$ | async"
+                                        [value]="adPlatform.id">{{adPlatform.name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -61,23 +61,92 @@
                         <div class="col-sm-6">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Brought Date</mat-label>
-                                <input placeholder="Brought Date" matInput [matDatepicker]="picker6"
-                                    formControlName="broughtDate" (focus)="picker6.open()" (click)="picker6.open()"
+                                <input placeholder="Brought Date" matInput [matDatepicker]="picker"
+                                    formControlName="broughtDate" (focus)="picker.open()" (click)="picker.open()"
                                     [readonly]="saveMode">
-                                <mat-datepicker-toggle matSuffix [for]="picker6" [disabled]="saveMode">
+                                <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="saveMode">
                                 </mat-datepicker-toggle>
-                                <mat-datepicker #picker6 [disabled]="saveMode"></mat-datepicker>
+                                <mat-datepicker #picker [disabled]="saveMode"></mat-datepicker>
                             </mat-form-field>
                         </div>
                         <div class="col-sm-6">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Sold Date</mat-label>
-                                <input placeholder="Sold Date" matInput [matDatepicker]="picker7"
-                                    formControlName="soldDate" (focus)="picker7.open()"
-                                    (click)="picker7.open()" [readonly]="saveMode">
-                                <mat-datepicker-toggle matSuffix [for]="picker7" [disabled]="saveMode">
+                                <input placeholder="Sold Date" matInput [matDatepicker]="picker1"
+                                    formControlName="soldDate" (focus)="picker1.open()"
+                                    (click)="picker1.open()" [readonly]="saveMode">
+                                <mat-datepicker-toggle matSuffix [for]="picker1" [disabled]="saveMode">
                                 </mat-datepicker-toggle>
-                                <mat-datepicker #picker7 [disabled]="saveMode"></mat-datepicker>
+                                <mat-datepicker #picker1 [disabled]="saveMode"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Transfered Date</mat-label>
+                                <input placeholder="Transfered Date" matInput [matDatepicker]="picker2"
+                                    formControlName="transferedDate" (focus)="picker2.open()" (click)="picker2.open()"
+                                    [readonly]="saveMode">
+                                <mat-datepicker-toggle matSuffix [for]="picker2" [disabled]="saveMode">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker2 [disabled]="saveMode"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Returned Date</mat-label>
+                                <input placeholder="Returned Date" matInput [matDatepicker]="picker3"
+                                    formControlName="returnedDate" (focus)="picker3.open()"
+                                    (click)="picker3.open()" [readonly]="saveMode">
+                                <mat-datepicker-toggle matSuffix [for]="picker3" [disabled]="saveMode">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker3 [disabled]="saveMode"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Resold Date</mat-label>
+                                <input placeholder="Resold Date" matInput [matDatepicker]="picker4"
+                                    formControlName="resoldDate" (focus)="picker4.open()"
+                                    (click)="picker4.open()" [readonly]="saveMode">
+                                <mat-datepicker-toggle matSuffix [for]="picker4" [disabled]="saveMode">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker4 [disabled]="saveMode"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Sold Amount</mat-label>
+                                <input matInput placeholder="Sold Amount" formControlName="soldAmount"
+                                    type="number" min="0" [readonly]="saveMode">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Client</mat-label>
+                                <mat-select formControlName="clientId" [disabled]="saveMode">
+                                    <mat-option *ngFor="let client of clients$ | async"
+                                        [value]="client.id">{{client.name +" "+ client.surname}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Client Amount</mat-label>
+                                <input matInput placeholder="Client Amount" formControlName="clientAmount"
+                                    type="number" min="0" [readonly]="saveMode">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Commission Amount</mat-label>
+                                <input matInput placeholder="Commission Amount" formControlName="commissionAmount"
+                                    type="number" min="0" [readonly]="saveMode">
                             </mat-form-field>
                         </div>
 

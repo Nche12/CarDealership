@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IApiData } from '../../Interface/interface';
+import { IApiData, ICarInventory } from '../../Interface/interface';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +21,11 @@ export class CarsService {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
     let API_URL = `${userApiUrl}/cars`;
     return this.http.get<IApiData[]>(API_URL);
+  }
+
+  saveCar(carObject: ICarInventory): Observable<any> {
+    const userApiUrl = window.sessionStorage.getItem('userApiUrl');
+    let API_URL = `${userApiUrl}/cars`;
+    return this.http.post<any>(API_URL, carObject);
   }
 }

@@ -58,3 +58,26 @@ export interface CarMake {
   id: number
   name: string
 }
+
+export interface IClient {
+  id: number
+  name: string
+  surname: string
+  idNumber: string
+  pnoneNumber: string
+  email: string
+  advertisingPlatformId: number
+}
+
+export interface IAdPlatform {
+  id: number
+  name: string
+  paymentAmount: number
+  frequencyId: number
+  frequency: Frequency
+}
+
+export interface Frequency {
+  id: number
+  name: string
+}

@@ -3,8 +3,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CarsService } from '../Services/CarsInventory/cars.service';
 import { ActivatedRoute } from '@angular/router';
 import { CarModelService } from '../Services/CarModel/car-model.service';
-import { ICarModel } from '../Interface/interface';
+import { IAdPlatform, ICarModel, IClient } from '../Interface/interface';
 import { Observable, map } from 'rxjs';
+import { ClientService } from '../Services/Client/client.service';
+import { AdPlatformService } from '../Services/AdPlatform/ad-platform.service';
 
 @Component({
   selector: 'app-add-edit-car',
@@ -12,8 +14,9 @@ import { Observable, map } from 'rxjs';
   styleUrls: ['./add-edit-car.component.scss'],
 })
 export class AddEditCarComponent implements OnInit {
-
-  public carModels$! : Observable<ICarModel[]>;
+  public carModels$!: Observable<ICarModel[]>;
+  public clients$!: Observable<IClient[]>;
+  public adPlatforms$!: Observable<IAdPlatform[]>;
   public carForm: FormGroup = new FormGroup({
     carModelId: new FormControl(0),
     colour: new FormControl(''),
@@ -41,24 +44,43 @@ export class AddEditCarComponent implements OnInit {
   constructor(
     private carsService: CarsService,
     private carModelService: CarModelService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private clientService: ClientService,
+    private adPlatformService: AdPlatformService
   ) {}
 
   ngOnInit(): void {
     this.title = this.route.snapshot.queryParams['action'];
     this.getCarModel();
+    this.getClients(true);
+    this.getAdPlatform(true);
   }
 
-  getCarModel() {
-    this.carModels$ =  this.carModelService.getCarModel().pipe(
-      map((info: any )=> info.data)
-    );
+  getCarModel(): void {
+    this.carModels$ = this.carModelService
+      .getCarModel()
+      .pipe(map((info: any) => info.data));
+  }
+
+  getClients(refresh: boolean): void {
+    this.clients$ = this.clientService
+      .getClients(refresh)
+      .pipe(map((info: any) => info.data));
+  }
+
+  getAdPlatform(refresh: boolean): void {
+    this.adPlatforms$ = this.adPlatformService
+      .getAdPlatform(refresh)
+      .pipe(map((info: any) => info.data));
   }
 
   saveInventory() {
     console.log('Form to Save => ', this.carForm.value);
-    this.editMode = false;
-    this.saveMode = true;
+    this.carsService.saveCar(this.carForm.value).subscribe((response) => {
+      console.log("Save Response => ", response)
+      this.editMode = false;
+      this.saveMode = true;
+    });
   }
 
   editInventory() {
@@ -66,6 +88,4 @@ export class AddEditCarComponent implements OnInit {
     this.editMode = true;
     this.saveMode = false;
   }
-
-
 }
