@@ -50,6 +50,16 @@
 
                         <div class="col-sm-6">
                             <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Car Colour</mat-label>
+                                <mat-select formControlName="carModelId" [disabled]="saveMode">
+                                    <mat-option *ngFor="let colour of colours$ | async"
+                                        [value]="colour.id">{{colour.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Ad Platform</mat-label>
                                 <mat-select formControlName="advertisingPlatformId" [disabled]="saveMode">
                                     <mat-option *ngFor="let adPlatform of adPlatforms$ | async"

@@ -21,7 +21,7 @@ public client$!: Observable<IClient[]>;
 
   refreshClients(): Observable<IClient[]> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
-    let API_URL = `${userApiUrl}/clients`;
+    const API_URL = `${userApiUrl}/clients`;
     return this.http.get<IClient[]>(API_URL);
   }
 

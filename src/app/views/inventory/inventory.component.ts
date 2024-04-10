@@ -43,10 +43,7 @@ export class InventoryComponent implements OnInit {
   public filtervalue: string = '';
   public columnChooserOpened: boolean = false;
 
-  constructor(
-    private carsService: CarsService,
-     private router: Router
-     ) {}
+  constructor(private carsService: CarsService, private router: Router) {}
 
   ngOnInit() {
     this.pageSettings = { pageSize: 25 };
@@ -76,6 +73,14 @@ export class InventoryComponent implements OnInit {
     console.log('add or edit => ', add_edit);
     this.router.navigate(['/add_edit_inventory'], {
       queryParams: { action: add_edit },
+    });
+  }
+
+  editInventory(add_edit: string, data: IInventory): void {
+    console.log('Edit Inventory => ', data);
+    console.log('add or edit => ', add_edit);
+    this.router.navigate(['/add_edit_inventory'], {
+      queryParams: { action: add_edit, id: data.id },
     });
   }
 

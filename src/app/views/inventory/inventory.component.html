@@ -18,7 +18,11 @@
 
                 <e-column [visible]="false" field='id' headerText='Car ID' [filter]='filter' isPrimaryKey="true"
                     width='180' [showInColumnChooser]="false"></e-column>
-                <e-column field='carModel' headerText='Model' [filter]='filter' minWidth='180'></e-column>
+                <e-column field='carModel.name' headerText='Model' [filter]='filter' minWidth='180'>
+                    <ng-template #template let-data>
+                        <span (click)="editInventory('edit',data)" class="link">{{data.carModel.name}}</span>
+                    </ng-template>
+                </e-column>
                 <e-column field='colour' headerText='Colour' [filter]='filter' minWidth='140'></e-column>
                 <e-column field='mileage' headerText='mileage' [filter]='filter' width='180'></e-column>
                 <e-column field='comments' headerText='Comments' [filter]='filter' minWidth='140'></e-column>

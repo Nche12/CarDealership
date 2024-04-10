@@ -1,17 +1,17 @@
 export interface IInventory {
   id: number;
   carModelId: number;
-  carModel: string;
+  carModel: ICarModel;
   colour: string;
   mileage: number;
   comments: string;
   advertisingPlatformId: number;
   advertisingPlatform: null;
-  broughtDate: string;
-  soldDate: string;
-  transferedDate: string;
-  returnedDate: string;
-  resoldDate: string;
+  broughtDate: Date;
+  soldDate: Date;
+  transferedDate: Date;
+  returnedDate: Date;
+  resoldDate: Date;
   soldAmount: number;
   clientId: number;
   clientAmount: number;
@@ -21,6 +21,7 @@ export interface IInventory {
   isSold: boolean;
 }
 
+
 export interface IApiData {
   data: any[];
   message: string;
@@ -29,6 +30,26 @@ export interface IApiData {
 }
 
 export interface ICarInventory {
+  carModelId: number
+  colour: string
+  mileage: number
+  comments: string
+  advertisingPlatformId: number
+  broughtDate: string
+  soldDate: string
+  transferedDate: string
+  returnedDate: string
+  resoldDate: string
+  soldAmount: number
+  clientId: number
+  clientAmount: number
+  commissionAmount: number
+  userId: number
+  isSold: boolean
+}
+
+export interface IEditCarInventory {
+  id: number
   carModelId: number
   colour: string
   mileage: number
@@ -74,10 +95,15 @@ export interface IAdPlatform {
   name: string
   paymentAmount: number
   frequencyId: number
-  frequency: Frequency
+  frequency: IFrequency
 }
 
-export interface Frequency {
+export interface IFrequency {
+  id: number
+  name: string
+}
+
+export interface IColour {
   id: number
   name: string
 }
