@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CarsService } from '../Services/CarsInventory/cars.service';
 import { ActivatedRoute } from '@angular/router';
 import { CarModelService } from '../Services/CarModel/car-model.service';
@@ -24,29 +24,38 @@ export class AddEditCarComponent implements OnInit {
   public clients$!: Observable<IClient[]>;
   public adPlatforms$!: Observable<IAdPlatform[]>;
   public colours$!: Observable<IColour[]>;
+
+  public editMode: boolean = false;
+  public saveMode: boolean = true;
+
   public carForm: FormGroup = new FormGroup({
-    // id: new FormControl(null),
-    carModelId: new FormControl(0),
-    colour: new FormControl(''),
+    id: new FormControl(null),
+    carModelId: new FormControl(
+      { value: 0, disabled: this.saveMode },
+      Validators.required
+    ),
+    colour: new FormControl(null), //Need to add validation after backend adjustment
     mileage: new FormControl(0),
     comments: new FormControl(''),
-    advertisingPlatformId: new FormControl(null),
-    broughtDate: new FormControl(null),
+    advertisingPlatformId: new FormControl({
+      value: null,
+      disabled: this.saveMode,
+    }),
+    broughtDate: new FormControl(null, Validators.required),
     soldDate: new FormControl(null),
     transferedDate: new FormControl(null),
     returnedDate: new FormControl(null),
     resoldDate: new FormControl(null),
     soldAmount: new FormControl(null),
-    clientId: new FormControl(null),
+    clientId: new FormControl(
+      { value: null, disabled: this.saveMode },
+      Validators.required
+    ),
     clientAmount: new FormControl(null),
     commissionAmount: new FormControl(null),
-    userId: new FormControl(2),
+    userId: new FormControl(2, Validators.required),
     isSold: new FormControl(false),
   });
-  
-
-  public editMode: boolean = false;
-  public saveMode: boolean = true;
 
   public title: string = '';
   public carId!: number;
@@ -128,28 +137,44 @@ export class AddEditCarComponent implements OnInit {
   saveInventory() {
     console.log('Form to Save => ', this.carForm.value);
     console.log('Title => ', this.title);
+    //Dates need converting
     if (this.title == 'add') {
-      this.carsService
-        .saveCar(this.carForm.value)
-        .subscribe((response: any) => {
-          console.log('Save(add) Response => ', response);
-          this.editMode = false;
-          this.saveMode = true;
-        });
+      //need to let the api ignore the id on the back end
+      let newCarObject = this.carForm.value;
+      delete newCarObject.id;
+      console.log('New Car Object => ', newCarObject);
+      this.carsService.saveCar(newCarObject).subscribe((response: any) => {
+        console.log('Save(add) Response => ', response);
+        this.disableForm();
+      });
     } else if (this.title == 'edit') {
       this.carsService
         .updateCar(this.carForm.value)
         .subscribe((response: any) => {
           console.log('Save(edit) Response => ', response);
-          this.editMode = false;
-          this.saveMode = true;
+          this.disableForm();
         });
     }
   }
 
-  editInventory() {
-    console.log('Edit Form!');
+  public enableForm(): void {
     this.editMode = true;
     this.saveMode = false;
+    this.carForm.get('carModelId')?.enable();
+    this.carForm.get('advertisingPlatformId')?.enable();
+    this.carForm.get('clientId')?.enable();
+  }
+
+  public disableForm(): void {
+    this.editMode = false;
+    this.saveMode = true;
+    this.carForm.get('carModelId')?.disable();
+    this.carForm.get('advertisingPlatformId')?.disable();
+    this.carForm.get('clientId')?.disable();
+  }
+
+  editInventory() {
+    console.log('Edit Form!');
+    this.enableForm();
   }
 }

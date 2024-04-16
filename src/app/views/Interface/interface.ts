@@ -6,7 +6,7 @@ export interface IInventory {
   mileage: number;
   comments: string;
   advertisingPlatformId: number;
-  advertisingPlatform: null;
+  advertisingPlatform: IAdPlatform;
   broughtDate: Date;
   soldDate: Date;
   transferedDate: Date;
@@ -17,10 +17,20 @@ export interface IInventory {
   clientAmount: number;
   commissionAmount: number;
   userId: number;
-  user: string;
+  user: IUser;
   isSold: boolean;
 }
 
+export interface IUser {
+  id: number
+  name: string
+  surname: string
+  email: string
+  password: string
+  phone: string
+  userRoleId: number
+  userRole: any
+}
 
 export interface IApiData {
   data: any[];
@@ -48,24 +58,8 @@ export interface ICarInventory {
   isSold: boolean
 }
 
-export interface IEditCarInventory {
+export interface IEditCarInventory extends ICarInventory {
   id: number
-  carModelId: number
-  colour: string
-  mileage: number
-  comments: string
-  advertisingPlatformId: number
-  broughtDate: string
-  soldDate: string
-  transferedDate: string
-  returnedDate: string
-  resoldDate: string
-  soldAmount: number
-  clientId: number
-  clientAmount: number
-  commissionAmount: number
-  userId: number
-  isSold: boolean
 }
 
 export interface ICarModel {

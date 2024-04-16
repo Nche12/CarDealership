@@ -26,13 +26,13 @@
                 <e-column field='colour' headerText='Colour' [filter]='filter' minWidth='140'></e-column>
                 <e-column field='mileage' headerText='mileage' [filter]='filter' width='180'></e-column>
                 <e-column field='comments' headerText='Comments' [filter]='filter' minWidth='140'></e-column>
-                <e-column field='advertisingPlatform' headerText='Ad Platform' [filter]='filter' minWidth='140'></e-column>
+                <e-column field='advertisingPlatform.name' headerText='Ad Platform' [filter]='filter' minWidth='140'></e-column>
                 <e-column field='broughtDate' headerText='Brought Date' [filter]='filter' minWidth='140' [visible]="false"></e-column>
                 <e-column field='soldDate' headerText='Sold Date' [filter]='filter' minWidth='140'  [visible]="false"></e-column>
                 <e-column field='soldAmount' headerText='Sold Amount' [filter]='filter' width='180'></e-column>
                 <e-column field='client' headerText='Client' [filter]='filter' minWidth='140' [visible]="false"></e-column>
                 <e-column field='commissionAmount' headerText='Commission' [filter]='filter' minWidth='140' [visible]="false"></e-column>
-                <e-column field='user' headerText='Agent' [filter]='filter' minWidth='140'></e-column>
+                <e-column field='user.name' headerText='Agent' [filter]='filter' minWidth='140'></e-column>
                 <e-column field='isSold' headerText='Sold' [filter]='filter' minWidth='140'></e-column>
             </e-columns>
             

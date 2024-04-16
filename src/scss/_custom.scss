@@ -132,3 +132,22 @@ mat-sidenav-content {
   .link:hover {
     text-decoration: underline;
   }
+
+  button.disabledBtn {
+    color:gray !important;
+    background-color: lightgray !important;
+  }
+
+  .stickysection {
+    display: flex;
+    flex-wrap: wrap;
+    /* Wrap children if they don't fit on one line */
+    align-items: center;
+    justify-content: space-between;
+    /* Space out children equally */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    z-index: 17;
+    background: #fbfcfd;
+  }
