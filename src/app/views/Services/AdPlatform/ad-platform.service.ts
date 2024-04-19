@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { IAdPlatform } from '../../Interface/interface';
 import { HttpClient } from '@angular/common/http';
 
@@ -15,8 +15,10 @@ export class AdPlatformService {
   ) { }
 
   getAdPlatform(refresh: boolean): Observable<IAdPlatform[]> {
-    if (this.adPlatform$ || refresh) {
-      this.adPlatform$ = this.refreshAdPlatform();
+    if (!this.adPlatform$ || refresh) {
+      this.adPlatform$ = this.refreshAdPlatform().pipe(
+        shareReplay(1)
+      );
     }
     return this.adPlatform$;
   }

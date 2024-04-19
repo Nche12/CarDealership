@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { IColour } from '../../Interface/interface';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,8 +11,10 @@ export class ColourService {
   constructor(private http: HttpClient) {}
 
   getColours(refresh: boolean): Observable<IColour[]> {
-    if (this.colour$ || refresh) {
-      this.colour$ = this.refreshColours();
+    if (!this.colour$ || refresh) {
+      this.colour$ = this.refreshColours().pipe(
+        shareReplay(1)
+      );
     }
     return this.colour$;
   }

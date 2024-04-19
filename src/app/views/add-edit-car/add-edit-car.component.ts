@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CarsService } from '../Services/CarsInventory/cars.service';
 import { ActivatedRoute } from '@angular/router';
@@ -9,17 +9,19 @@ import {
   IClient,
   IColour,
 } from '../Interface/interface';
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { ClientService } from '../Services/Client/client.service';
 import { AdPlatformService } from '../Services/AdPlatform/ad-platform.service';
 import { ColourService } from '../Services/Colour/colour.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CarModelComponent } from '../dialogs/car-model/car-model.component';
 
 @Component({
   selector: 'app-add-edit-car',
   templateUrl: './add-edit-car.component.html',
   styleUrls: ['./add-edit-car.component.scss'],
 })
-export class AddEditCarComponent implements OnInit {
+export class AddEditCarComponent implements OnInit, OnDestroy {
   public carModels$!: Observable<ICarModel[]>;
   public clients$!: Observable<IClient[]>;
   public adPlatforms$!: Observable<IAdPlatform[]>;
@@ -34,7 +36,7 @@ export class AddEditCarComponent implements OnInit {
       { value: 0, disabled: this.saveMode },
       Validators.required
     ),
-    colour: new FormControl(null), //Need to add validation after backend adjustment
+    colourId: new FormControl(null), //Need to add validation after backend adjustment
     mileage: new FormControl(0),
     comments: new FormControl(''),
     advertisingPlatformId: new FormControl({
@@ -59,6 +61,7 @@ export class AddEditCarComponent implements OnInit {
 
   public title: string = '';
   public carId!: number;
+  public subscriptions: Subscription[] = [];
 
   constructor(
     private carsService: CarsService,
@@ -66,22 +69,27 @@ export class AddEditCarComponent implements OnInit {
     private route: ActivatedRoute,
     private clientService: ClientService,
     private adPlatformService: AdPlatformService,
-    private colourService: ColourService
+    private colourService: ColourService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.title = this.route.snapshot.queryParams['action'];
     this.carId = this.route.snapshot.queryParams['id'];
     this.addEditOption(this.title, this.carId);
-    this.getCarModel();
+    this.getCarModel(true);
     this.getClients(true);
     this.getAdPlatform(true);
     this.getColours(true);
   }
 
-  getCarModel(): void {
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub: any) => sub.unsubscribe());
+  }
+
+  getCarModel(refresh: boolean): void {
     this.carModels$ = this.carModelService
-      .getCarModel()
+      .getCarModels(refresh)
       .pipe(map((info: any) => info.data));
   }
 
@@ -110,7 +118,7 @@ export class AddEditCarComponent implements OnInit {
   }
 
   getCar(carId: number): void {
-    this.carsService.getCar(carId).subscribe((info: any) => {
+    const carsSub = this.carsService.getCar(carId).subscribe((info: any) => {
       this.carForm.setValue({
         id: info.data.id,
         carModelId: info.data.carModelId,
@@ -132,6 +140,7 @@ export class AddEditCarComponent implements OnInit {
       });
       console.log('Form Value Edit => ', this.carForm.value);
     });
+    this.subscriptions.push(carsSub);
   }
 
   saveInventory() {
@@ -143,17 +152,21 @@ export class AddEditCarComponent implements OnInit {
       let newCarObject = this.carForm.value;
       delete newCarObject.id;
       console.log('New Car Object => ', newCarObject);
-      this.carsService.saveCar(newCarObject).subscribe((response: any) => {
-        console.log('Save(add) Response => ', response);
-        this.disableForm();
-      });
+      const carInventoryAddSub = this.carsService
+        .saveCar(newCarObject)
+        .subscribe((response: any) => {
+          console.log('Save(add) Response => ', response);
+          this.disableForm();
+        });
+      this.subscriptions.push(carInventoryAddSub);
     } else if (this.title == 'edit') {
-      this.carsService
+      const carInventoryEditSub = this.carsService
         .updateCar(this.carForm.value)
         .subscribe((response: any) => {
           console.log('Save(edit) Response => ', response);
           this.disableForm();
         });
+      this.subscriptions.push(carInventoryEditSub);
     }
   }
 
@@ -176,5 +189,26 @@ export class AddEditCarComponent implements OnInit {
   editInventory() {
     console.log('Edit Form!');
     this.enableForm();
+  }
+
+  addEditCarModel(option: string): void {
+    console.log('Open Car Model Dialog');
+    const dialogRef = this.dialog.open(CarModelComponent, {
+      disableClose: true,
+      panelClass: '_dialog',
+      autoFocus: false,
+      data: {
+        option: option,
+      },
+    });
+
+    const carModeldialogSub = dialogRef.afterClosed().subscribe((response) => {
+      console.log('Response (Car Model Dialog) => ', response);
+      if (response == 'refresh') {
+        this.getCarModel(true);
+      }
+    });
+
+    this.subscriptions.push(carModeldialogSub);
   }
 }

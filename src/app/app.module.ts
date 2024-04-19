@@ -26,6 +26,11 @@ import { NgMaterialModule } from './views/ng-material/ng-material.module';
 import { NgSyncfusionModule } from './views/ng-syncfusion/ng-syncfusion.module';
 import { AddEditCarComponent } from './views/add-edit-car/add-edit-car.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CarModelComponent } from './views/dialogs/car-model/car-model.component';
+import { CarMakeComponent } from './views/dialogs/car-make/car-make.component';
+import { ColourComponent } from './views/dialogs/colour/colour.component';
+import { ClientComponent } from './views/dialogs/client/client.component';
+import { AdvertisingPlatformComponent } from './views/dialogs/advertising-platform/advertising-platform.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     SupportComponent,
     CustomSidenavComponent,
     FooterComponent,
-    AddEditCarComponent
+    AddEditCarComponent,
+    CarModelComponent,
+    CarMakeComponent,
+    ColourComponent,
+    ClientComponent,
+    AdvertisingPlatformComponent
   ],
   imports: [
     BrowserModule,

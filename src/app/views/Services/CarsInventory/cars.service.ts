@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { IApiData, ICarInventory, IEditCarInventory } from '../../Interface/interface';
 
 @Injectable({
@@ -11,8 +11,10 @@ export class CarsService {
   constructor(private http: HttpClient) {}
 
   getInventory(refresh: boolean): Observable<IApiData[]> {
-    if (this.inventory$ || refresh) {
-      this.inventory$ = this.refreshInventory();
+    if (!this.inventory$ || refresh) {
+      this.inventory$ = this.refreshInventory().pipe(
+        shareReplay(1)
+      );
     }
     return this.inventory$;
   }

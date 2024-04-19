@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IClient } from '../../Interface/interface';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,8 +13,10 @@ public client$!: Observable<IClient[]>;
   ) { }
 
   getClients(refresh: boolean): Observable<IClient[]> {
-    if (this.client$ || refresh) {
-      this.client$ = this.refreshClients();
+    if (!this.client$ || refresh) {
+      this.client$ = this.refreshClients().pipe(
+        shareReplay(1)
+      );
     }
     return this.client$;
   }

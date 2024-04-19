@@ -62,14 +62,21 @@ export interface IEditCarInventory extends ICarInventory {
   id: number
 }
 
-export interface ICarModel {
+export interface ICarModel extends IAddCarModel {
   id: number
-  name: string
-  carMakeId: number
-  carMake: CarMake
+  carMake: ICarMake
 }
 
-export interface CarMake {
+export interface IAddCarModel {
+  name: string
+  carMakeId: number
+}
+
+export interface IEditCarModel extends IAddCarModel {
+  id: number
+}
+
+export interface ICarMake {
   id: number
   name: string
 }
