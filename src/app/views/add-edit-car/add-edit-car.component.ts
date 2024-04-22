@@ -77,7 +77,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     this.title = this.route.snapshot.queryParams['action'];
     this.carId = this.route.snapshot.queryParams['id'];
     this.addEditOption(this.title, this.carId);
-    this.getCarModel(true);
+    this.getCarModels(true);
     this.getClients(true);
     this.getAdPlatform(true);
     this.getColours(true);
@@ -87,7 +87,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub: any) => sub.unsubscribe());
   }
 
-  getCarModel(refresh: boolean): void {
+  getCarModels(refresh: boolean): void {
     this.carModels$ = this.carModelService
       .getCarModels(refresh)
       .pipe(map((info: any) => info.data));
@@ -205,7 +205,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     const carModeldialogSub = dialogRef.afterClosed().subscribe((response) => {
       console.log('Response (Car Model Dialog) => ', response);
       if (response == 'refresh') {
-        this.getCarModel(true);
+        this.getCarModels(true);
       }
     });
 

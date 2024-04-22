@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { ICarMake, ICarModel } from '../../Interface/interface';
 import { CarMakeService } from '../../Services/CarMake/car-make.service';
 import { CarModelService } from '../../Services/CarModel/car-model.service';
@@ -16,7 +16,9 @@ export class CarModelComponent implements OnInit, OnDestroy {
   public carModel$!: Observable<ICarModel>;
 
   public subscriptions: Subscription[] = [];
-  public nameExists: boolean = false;
+  public exists$!: Observable<boolean>;
+  public carModels$!: Observable<ICarModel[]>;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<CarModelComponent>,
@@ -27,6 +29,12 @@ export class CarModelComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('Data => ', this.data);
     this.getCarMakes(false);
+  }
+
+  onNameChange(event: Event): void {
+    console.log(event);
+    const inputElement = event.target as HTMLInputElement;
+    this.exists$ = this.carModelService.doesNameExist(inputElement.value);
   }
 
   ngOnDestroy(): void {
@@ -90,13 +98,17 @@ export class CarModelComponent implements OnInit, OnDestroy {
     console.log('IT UNSUBSCRIBED??');
   }
 
+  getCarModels(refresh: boolean): void {
+    this.carModels$ = this.carModelService
+      .getCarModels(refresh)
+      .pipe(map((info: any) => info.data));
+  }
+
   addEditCarMake(option: string): void {
     console.log('Open Car Make!');
   }
 
-  doesNameExist(): void {
-    
-  }
+  doesNameExist(): void {}
 
   cancel(): void {
     console.log('Cancel Car Model!');
