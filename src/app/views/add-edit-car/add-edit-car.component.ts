@@ -191,7 +191,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     this.enableForm();
   }
 
-  addEditCarModel(option: string): void {
+  addEditCarModel(option: string, carModel: any): void {
     console.log('Open Car Model Dialog');
     const dialogRef = this.dialog.open(CarModelComponent, {
       disableClose: true,
@@ -199,6 +199,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
       autoFocus: false,
       data: {
         option: option,
+        carModel: carModel
       },
     });
 

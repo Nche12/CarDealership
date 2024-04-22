@@ -22,14 +22,14 @@ export interface IInventory {
 }
 
 export interface IUser {
-  id: number
-  name: string
-  surname: string
-  email: string
-  password: string
-  phone: string
-  userRoleId: number
-  userRole: any
+  id: number;
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  phone: string;
+  userRoleId: number;
+  userRole: any;
 }
 
 export interface IApiData {
@@ -40,71 +40,74 @@ export interface IApiData {
 }
 
 export interface ICarInventory {
-  carModelId: number
-  colour: string
-  mileage: number
-  comments: string
-  advertisingPlatformId: number
-  broughtDate: string
-  soldDate: string
-  transferedDate: string
-  returnedDate: string
-  resoldDate: string
-  soldAmount: number
-  clientId: number
-  clientAmount: number
-  commissionAmount: number
-  userId: number
-  isSold: boolean
+  carModelId: number;
+  colour: string;
+  mileage: number;
+  comments: string;
+  advertisingPlatformId: number;
+  broughtDate: string;
+  soldDate: string;
+  transferedDate: string;
+  returnedDate: string;
+  resoldDate: string;
+  soldAmount: number;
+  clientId: number;
+  clientAmount: number;
+  commissionAmount: number;
+  userId: number;
+  isSold: boolean;
 }
 
 export interface IEditCarInventory extends ICarInventory {
-  id: number
+  id: number;
 }
 
 export interface ICarModel extends IAddCarModel {
-  id: number
-  carMake: ICarMake
+  id: number;
+  carMake: ICarMake;
 }
 
 export interface IAddCarModel {
-  name: string
-  carMakeId: number
+  name: string;
+  carMakeId: number;
 }
 
 export interface IEditCarModel extends IAddCarModel {
-  id: number
+  id: number;
 }
 
-export interface ICarMake {
-  id: number
-  name: string
+export interface ICarMake extends IAddCarMake {
+  id: number;
+}
+
+export interface IAddCarMake {
+  name: string;
 }
 
 export interface IClient {
-  id: number
-  name: string
-  surname: string
-  idNumber: string
-  pnoneNumber: string
-  email: string
-  advertisingPlatformId: number
+  id: number;
+  name: string;
+  surname: string;
+  idNumber: string;
+  pnoneNumber: string;
+  email: string;
+  advertisingPlatformId: number;
 }
 
 export interface IAdPlatform {
-  id: number
-  name: string
-  paymentAmount: number
-  frequencyId: number
-  frequency: IFrequency
+  id: number;
+  name: string;
+  paymentAmount: number;
+  frequencyId: number;
+  frequency: IFrequency;
 }
 
 export interface IFrequency {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
 export interface IColour {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }

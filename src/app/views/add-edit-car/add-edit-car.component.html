@@ -47,15 +47,22 @@
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Car Model</mat-label>
                   <mat-select formControlName="carModelId">
-                    <mat-option (click)="addEditCarModel('add')">
-                      <mat-icon class="material-icons-outlined"> add </mat-icon>
+                    <mat-option (click)="addEditCarModel('add', {})">
                       Add Car Model
+                      <mat-icon class="material-icons-outlined"> add </mat-icon>
                     </mat-option>
                     <mat-option
                       *ngFor="let carModel of carModels$ | async"
                       [value]="carModel.id"
-                      >{{ carModel.name }}</mat-option
+                      class="option-with-icon"
                     >
+                      {{ carModel.name }}
+                      <mat-icon
+                        class="material-icons-outlined editDropdownIcon mr-4"
+                        (click)="addEditCarModel('edit', carModel)"
+                        >mode</mat-icon
+                      >
+                    </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>

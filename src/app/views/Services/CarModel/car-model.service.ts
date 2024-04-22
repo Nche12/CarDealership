@@ -21,8 +21,6 @@ import {
 })
 export class CarModelService {
   public carModels$!: Observable<ICarModel[]>;
-  private carModelSubject = new BehaviorSubject<string>('');
-  public carModelToCheck$ = this.carModelSubject.asObservable();
   constructor(private http: HttpClient) {}
 
   getCarModels(refresh: boolean): Observable<ICarModel[]> {
@@ -54,11 +52,6 @@ export class CarModelService {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
     let API_URL = `${userApiUrl}/CarModels/${carObject.id}`;
     return this.http.post<any>(API_URL, carObject);
-  }
-
-  updateCarModelToCheck(model: string): void {
-    console.log('Updated !!');
-    this.carModelSubject.next(model);
   }
 
   doesNameExist(modelString: string): Observable<boolean> {
