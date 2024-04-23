@@ -63,6 +63,7 @@ export class CarModelComponent implements OnInit, OnDestroy {
       console.log(event);
       const inputElement = event.target as HTMLInputElement;
       this.exists$ = this.carModelService.doesNameExist(inputElement.value);
+      console.log("Exists => ", this.exists$.subscribe(exist => console.log(exist)))
     }
   }
 

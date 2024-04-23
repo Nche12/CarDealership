@@ -45,7 +45,7 @@ export class CarMakeService {
 
   updateCarMake(carMakeObject: ICarMake): Observable<any> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
-    const API_URL = `${userApiUrl}/CarMakes${carMakeObject.id}`;
+    const API_URL = `${userApiUrl}/CarMakes/${carMakeObject.id}`;
     return this.http.put<any>(API_URL, carMakeObject);
   }
 

@@ -13,7 +13,6 @@
 <mat-dialog-content class="py-3 px-4 m-0">
   <form class="example-form form" [formGroup]="carModelForm">
     <div class="row">
-
       <div class="col-sm-6">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Car Make</mat-label>
@@ -26,9 +25,12 @@
               *ngFor="let carMake of carMakes$ | async"
               [value]="carMake.id"
               >{{ carMake.name }}
-              <mat-icon class="material-icons-outlined editDropdownIcon mr-4" 
-              (click)="addEditCarMake('edit', carMake)">mode</mat-icon>
-              </mat-option>
+              <mat-icon
+                class="material-icons-outlined editDropdownIcon mr-4"
+                (click)="addEditCarMake('edit', carMake)"
+                >mode</mat-icon
+              >
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -43,10 +45,11 @@
             (input)="onNameChange($event)"
             type="text"
           />
-          <mat-error *ngIf="exists$ | async">{{carModelForm.value.name}} already exists!</mat-error>
         </mat-form-field>
+        <mat-error *ngIf="exists$ | async"
+          >{{ carModelForm.value.name }} already exists!</mat-error
+        >
       </div>
-      
     </div>
 
     <div class="col-md-12 py-4 text-center">

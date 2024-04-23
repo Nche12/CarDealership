@@ -65,7 +65,7 @@ export class CarMakeComponent implements OnInit, OnDestroy {
 
   saveCarMake(): void {
     console.log('Car Make to Save => ', this.carMakeForm.value);
-    if (this.data.oprion == 'add') {
+    if (this.data.option == 'add') {
       this.addCarMake();
     } else if (this.data.option == 'edit') {
       this.editCarMake();
@@ -81,6 +81,7 @@ export class CarMakeComponent implements OnInit, OnDestroy {
         (response: any) => {
           console.log('Response => ', response);
           this.getCarMakes(true);
+          this.dialogRef.close('refresh');
         }
         // , error => {
         //   console.error(error);
@@ -97,6 +98,7 @@ export class CarMakeComponent implements OnInit, OnDestroy {
         (response: any) => {
           console.log('response => ', response);
           this.getCarMakes(true);
+          this.dialogRef.close('refresh');
         }
         // , error => {
         //   console.error(error);

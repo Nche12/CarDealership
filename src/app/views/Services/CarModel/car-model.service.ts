@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   IAddCarModel,
-  ICarModel,
+  IApiData,
   IEditCarModel,
 } from '../../Interface/interface';
 import {
@@ -20,26 +20,26 @@ import {
   providedIn: 'root',
 })
 export class CarModelService {
-  public carModels$!: Observable<ICarModel[]>;
+  public carModels$!: Observable<IApiData[]>;
   constructor(private http: HttpClient) {}
 
-  getCarModels(refresh: boolean): Observable<ICarModel[]> {
+  getCarModels(refresh: boolean): Observable<IApiData[]> {
     if (!this.carModels$ || refresh) {
       this.carModels$ = this.refreshCarModels().pipe(shareReplay(1));
     }
     return this.carModels$;
   }
 
-  refreshCarModels(): Observable<ICarModel[]> {
+  refreshCarModels(): Observable<IApiData[]> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
     let API_URL = `${userApiUrl}/CarModels`;
-    return this.http.get<ICarModel[]>(API_URL);
+    return this.http.get<IApiData[]>(API_URL);
   }
 
-  getCarModel(carModelId: number): Observable<ICarModel> {
+  getCarModel(carModelId: number): Observable<IApiData> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
     let API_URL = `${userApiUrl}/CarModels/${carModelId}`;
-    return this.http.get<ICarModel>(API_URL);
+    return this.http.get<IApiData>(API_URL);
   }
 
   addCarModel(carObject: IAddCarModel): Observable<any> {
@@ -51,15 +51,15 @@ export class CarModelService {
   updateCarModel(carObject: IEditCarModel): Observable<any> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
     let API_URL = `${userApiUrl}/CarModels/${carObject.id}`;
-    return this.http.post<any>(API_URL, carObject);
+    return this.http.put<any>(API_URL, carObject);
   }
 
   doesNameExist(modelString: string): Observable<boolean> {
     console.log("CHECK!!! => ", modelString);
-    console.log("MODELS  => ", this.carModels$.subscribe(res => console.log(res)))
+    console.log("MODELS  => ", this.carModels$.subscribe((res: any) => console.log(res.data)))
     const carModelToCheck$ = of(modelString);
     return carModelToCheck$.pipe(
-      debounceTime(300),
+      debounceTime(2000),
       distinctUntilChanged(),
       switchMap((model: any) =>
         this.carModels$.pipe(
