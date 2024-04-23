@@ -16,6 +16,7 @@ import { ColourService } from '../Services/Colour/colour.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CarModelComponent } from '../dialogs/car-model/car-model.component';
 import { ColourComponent } from '../dialogs/colour/colour.component';
+import { AdvertisingPlatformComponent } from '../dialogs/advertising-platform/advertising-platform.component';
 
 @Component({
   selector: 'app-add-edit-car',
@@ -235,5 +236,27 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(colourdialogSub);
+  }
+
+  addEditAdPlatform(option: string, adPlatform: any): void {
+    console.log("Open Ad Platform ");
+    const dialogRef = this.dialog.open(AdvertisingPlatformComponent, {
+      disableClose: true,
+      panelClass: '_dialog',
+      autoFocus: false,
+      data: {
+        option: option,
+        adPlatform: adPlatform
+      },
+    });
+
+    const addPlatformdialogSub = dialogRef.afterClosed().subscribe((response) => {
+      console.log('Response (Car Model Dialog) => ', response);
+      if (response == 'refresh') {
+        this.getAdPlatform(true);
+      }
+    });
+
+    this.subscriptions.push(addPlatformdialogSub);
   }
 }

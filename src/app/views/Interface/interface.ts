@@ -94,12 +94,15 @@ export interface IClient {
   advertisingPlatformId: number;
 }
 
-export interface IAdPlatform {
+export interface IAdPlatform extends IAddAdPlatform {
   id: number;
+  frequency: IFrequency;
+}
+
+export interface IAddAdPlatform {
   name: string;
   paymentAmount: number;
   frequencyId: number;
-  frequency: IFrequency;
 }
 
 export interface IFrequency {
@@ -112,5 +115,13 @@ export interface IColour extends IAddColour {
 }
 
 export interface IAddColour {
+  name: string;
+}
+
+export interface IFrequency extends IAddFrequency {
+  id: number;
+}
+
+export interface IAddFrequency {
   name: string;
 }

@@ -8,28 +8,28 @@ import {
   shareReplay,
   switchMap,
 } from 'rxjs';
-import { IColour } from '../../Interface/interface';
+import { IApiData, IColour } from '../../Interface/interface';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColourService {
-  public colours$!: Observable<IColour[]>;
-  
+  public colours$!: Observable<IApiData[]>;
+
   constructor(private http: HttpClient) {}
 
-  getColours(refresh: boolean): Observable<IColour[]> {
+  getColours(refresh: boolean): Observable<IApiData[]> {
     if (!this.colours$ || refresh) {
       this.colours$ = this.refreshColours().pipe(shareReplay(1));
     }
     return this.colours$;
   }
 
-  refreshColours(): Observable<IColour[]> {
+  refreshColours(): Observable<IApiData[]> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
     const API_URL = `${userApiUrl}/CarColours`;
-    return this.http.get<IColour[]>(API_URL);
+    return this.http.get<IApiData[]>(API_URL);
   }
 
   addColour(colourObject: IColour): Observable<any> {
@@ -60,4 +60,5 @@ export class ColourService {
       )
     );
   }
+  
 }

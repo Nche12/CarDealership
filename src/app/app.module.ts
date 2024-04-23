@@ -31,6 +31,7 @@ import { CarMakeComponent } from './views/dialogs/car-make/car-make.component';
 import { ColourComponent } from './views/dialogs/colour/colour.component';
 import { ClientComponent } from './views/dialogs/client/client.component';
 import { AdvertisingPlatformComponent } from './views/dialogs/advertising-platform/advertising-platform.component';
+import { FrequencyComponent } from './views/dialogs/frequency/frequency.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AdvertisingPlatformComponent } from './views/dialogs/advertising-platfo
     CarMakeComponent,
     ColourComponent,
     ClientComponent,
-    AdvertisingPlatformComponent
+    AdvertisingPlatformComponent,
+    FrequencyComponent
   ],
   imports: [
     BrowserModule,

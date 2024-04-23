@@ -106,10 +106,19 @@
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Ad Platform</mat-label>
                   <mat-select formControlName="advertisingPlatformId">
+                    <mat-option (click)="addEditAdPlatform('add', {})">
+                      Add Advert Platform
+                      <mat-icon class="material-icons-outlined"> add </mat-icon>
+                    </mat-option>
                     <mat-option
                       *ngFor="let adPlatform of adPlatforms$ | async"
                       [value]="adPlatform.id"
-                      >{{ adPlatform.name }}</mat-option
+                      >{{ adPlatform.name }}
+                      <mat-icon
+                        class="material-icons-outlined editDropdownIcon mr-4"
+                        (click)="addEditAdPlatform('edit', adPlatform)"
+                        >mode</mat-icon >
+                      </mat-option
                     >
                   </mat-select>
                 </mat-form-field>
