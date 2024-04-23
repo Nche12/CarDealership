@@ -1,1 +1,49 @@
-<p>colour works!</p>
+<div class="matModalTitle">
+    <h5 class="m-0">Colour</h5>
+    <button
+      mat-icon-button
+      type="button"
+      (click)="close()"
+      aria-label="Example icon button with a vertical three dot icon"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <mat-dialog-content class="py-3 px-4 m-0">
+    <form class="example-form form" [formGroup]="colourForm">
+      <div class="row">
+        <div>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Colour</mat-label>
+            <input
+              matInput
+              placeholder="Colour Name"
+              formControlName="name"
+              (input)="onNameChange($event)"
+              type="text"
+            />
+          </mat-form-field>
+          <mat-error *ngIf="exists$ | async"
+            >{{ colourForm.value.name }} already exists!</mat-error
+          >
+        </div>
+      </div>
+  
+      <div class="col-md-12 py-4 text-center">
+        <!-- <button mat-button (click)="check()"> CHECK</button> -->
+        <button
+          mat-button
+          type="button"
+          class="theme-btn mx-2"
+          (click)="saveColour()"
+          [disabled]="colourForm.invalid || (exists$ | async)"
+          [ngClass]="{ disabledBtn: colourForm.invalid || (exists$ | async) }"
+        >
+          <mat-icon class="material-icons-outlined">save</mat-icon>
+          Save
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+  

@@ -160,7 +160,10 @@ export class CarModelComponent implements OnInit, OnDestroy {
 
     const carMakeSub = dialogRef.afterClosed().subscribe((res: any) => {
       console.log('Response => ', res);
-      this.getCarMakes(true);
+      if(res == 'refresh') {
+        this.getCarMakes(true);
+      } else {}
+      
     });
 
     this.subscriptions.push(carMakeSub);

@@ -50,8 +50,8 @@ export class CarMakeService {
   }
 
   doesNameExist(makeString: string): Observable<boolean> {
-    const carModelToCheck$ = of(makeString);
-    return carModelToCheck$.pipe(
+    const carMakeToCheck$ = of(makeString);
+    return carMakeToCheck$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((make: any) =>
@@ -66,4 +66,6 @@ export class CarMakeService {
       )
     );
   }
+
+
 }

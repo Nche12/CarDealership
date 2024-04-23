@@ -107,7 +107,10 @@ export interface IFrequency {
   name: string;
 }
 
-export interface IColour {
+export interface IColour extends IAddColour {
   id: number;
+}
+
+export interface IAddColour {
   name: string;
 }

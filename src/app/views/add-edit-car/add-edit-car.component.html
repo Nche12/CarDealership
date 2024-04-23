@@ -60,8 +60,7 @@
                       <mat-icon
                         class="material-icons-outlined editDropdownIcon mr-4"
                         (click)="addEditCarModel('edit', carModel)"
-                        >mode</mat-icon
-                      >
+                        >mode</mat-icon >
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -85,10 +84,19 @@
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Car Colour</mat-label>
                   <mat-select formControlName="colourId">
+                    <mat-option (click)="addEditColour('add', {})">
+                      Add Car Colour
+                      <mat-icon class="material-icons-outlined"> add </mat-icon>
+                    </mat-option>
                     <mat-option
                       *ngFor="let colour of colours$ | async"
                       [value]="colour.id"
-                      >{{ colour.name }}</mat-option
+                      >{{ colour.name }}
+                      <mat-icon
+                        class="material-icons-outlined editDropdownIcon mr-4"
+                        (click)="addEditColour('edit', colour)"
+                        >mode</mat-icon >
+                      </mat-option
                     >
                   </mat-select>
                 </mat-form-field>
