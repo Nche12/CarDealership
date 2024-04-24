@@ -49,23 +49,4 @@ export class CarMakeService {
     return this.http.put<any>(API_URL, carMakeObject);
   }
 
-  doesNameExist(makeString: string): Observable<boolean> {
-    const carMakeToCheck$ = of(makeString);
-    return carMakeToCheck$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((make: any) =>
-        this.carMakes$.pipe(
-          map((info: any) =>
-            info.data.some(
-              (carModel: any) =>
-                carModel.name.toLowerCase() === make.toLowerCase()
-            )
-          )
-        )
-      )
-    );
-  }
-
-
 }

@@ -54,24 +54,4 @@ export class CarModelService {
     return this.http.put<any>(API_URL, carObject);
   }
 
-  doesNameExist(modelString: string): Observable<boolean> {
-    console.log("CHECK!!! => ", modelString);
-    console.log("MODELS  => ", this.carModels$.subscribe((res: any) => console.log(res.data)))
-    const carModelToCheck$ = of(modelString);
-    return carModelToCheck$.pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      switchMap((model: any) =>
-        this.carModels$.pipe(
-          map((info: any) =>
-            info.data.some(
-              (carModel: any) =>
-                // carModel.name.toLowerCase().includes(model.toLowerCase()) //checking for substring matches
-                carModel.name.toLowerCase() === model.toLowerCase()
-            )
-          )
-        )
-      )
-    );
-  }
 }

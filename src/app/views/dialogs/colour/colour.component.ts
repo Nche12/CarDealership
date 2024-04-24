@@ -4,6 +4,7 @@ import { IColour } from '../../Interface/interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ColourService } from '../../Services/Colour/colour.service';
+import { NameCheckService } from '../../Services/NameCheck/name-check.service';
 
 @Component({
   selector: 'app-colour',
@@ -18,7 +19,8 @@ export class ColourComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ColourComponent>,
-    private colourService: ColourService
+    private colourService: ColourService,
+    private nameCheckService: NameCheckService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +61,7 @@ export class ColourComponent implements OnInit, OnDestroy {
     if (this.data.option == 'add') {
       console.log(event);
       const inputElement = event.target as HTMLInputElement;
-      this.exists$ = this.colourService.doesNameExist(inputElement.value);
+      this.exists$ = this.nameCheckService.doesNameExist(inputElement.value, this.colours$);
     }
   }
 

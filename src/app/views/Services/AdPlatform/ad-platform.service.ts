@@ -48,21 +48,4 @@ export class AdPlatformService {
     return this.http.put<any>(API_URL, platformObject);
   }
 
-  doesNameExist(makeString: string): Observable<boolean> {
-    const platformToCheck$ = of(makeString);
-    return platformToCheck$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((platform: any) =>
-        this.adPlatforms$.pipe(
-          map((info: any) =>
-            info.data.some(
-              (adPlatform: any) =>
-                adPlatform.name.toLowerCase() === platform.toLowerCase()
-            )
-          )
-        )
-      )
-    );
-  }
 }

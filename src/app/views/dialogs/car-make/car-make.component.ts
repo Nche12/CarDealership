@@ -4,6 +4,7 @@ import { Observable, Subscription, map } from 'rxjs';
 import { ICarMake } from '../../Interface/interface';
 import { CarMakeService } from '../../Services/CarMake/car-make.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NameCheckService } from '../../Services/NameCheck/name-check.service';
 
 @Component({
   selector: 'app-car-make',
@@ -18,7 +19,8 @@ export class CarMakeComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<CarMakeComponent>,
-    private carMakeService: CarMakeService
+    private carMakeService: CarMakeService,
+    private nameCheckService: NameCheckService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +61,7 @@ export class CarMakeComponent implements OnInit, OnDestroy {
     if (this.data.option == 'add') {
       console.log(event);
       const inputElement = event.target as HTMLInputElement;
-      this.exists$ = this.carMakeService.doesNameExist(inputElement.value);
+      this.exists$ = this.nameCheckService.doesNameExist(inputElement.value, this.carMakes$);
     }
   }
 
@@ -108,5 +110,5 @@ export class CarMakeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(editCarMakeSub);
   }
 
-  
+
 }

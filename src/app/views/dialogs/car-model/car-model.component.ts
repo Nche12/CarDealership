@@ -18,6 +18,7 @@ import { ICarMake, ICarModel } from '../../Interface/interface';
 import { CarMakeService } from '../../Services/CarMake/car-make.service';
 import { CarModelService } from '../../Services/CarModel/car-model.service';
 import { CarMakeComponent } from '../car-make/car-make.component';
+import { NameCheckService } from '../../Services/NameCheck/name-check.service';
 
 @Component({
   selector: 'app-car-model',
@@ -37,13 +38,15 @@ export class CarModelComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<CarModelComponent>,
     private dialog: MatDialog,
     private carMakeService: CarMakeService,
-    private carModelService: CarModelService
+    private carModelService: CarModelService,
+    private nameCheckService: NameCheckService
   ) {}
 
   ngOnInit(): void {
     console.log('Data => ', this.data);
     this.getCarMakes(false);
     this.addOrEdit(this.data.option);
+    this.getCarModels(false);
   }
 
   addOrEdit(option: string): void {
@@ -62,7 +65,7 @@ export class CarModelComponent implements OnInit, OnDestroy {
     if (this.data.option == 'add') {
       console.log(event);
       const inputElement = event.target as HTMLInputElement;
-      this.exists$ = this.carModelService.doesNameExist(inputElement.value);
+      this.exists$ = this.nameCheckService.doesNameExist(inputElement.value, this.carModels$);
       console.log("Exists => ", this.exists$.subscribe(exist => console.log(exist)))
     }
   }

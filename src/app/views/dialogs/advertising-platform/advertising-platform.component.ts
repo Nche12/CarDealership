@@ -5,6 +5,8 @@ import { Observable, Subscription, map } from 'rxjs';
 import { IAdPlatform, IFrequency } from '../../Interface/interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FrequencyComponent } from '../frequency/frequency.component';
+import { NameCheckService } from '../../Services/NameCheck/name-check.service';
+import { FrequencyService } from '../../Services/Frequency/frequency.service';
 
 @Component({
   selector: 'app-advertising-platform',
@@ -22,11 +24,14 @@ export class AdvertisingPlatformComponent {
     private dialogRef: MatDialogRef<AdvertisingPlatformComponent>,
     private dialog: MatDialog,
     private adPlatformService: AdPlatformService,
+    private nameCheckService: NameCheckService,
+    private frequencyService: FrequencyService,
   ) {}
 
   ngOnInit(): void {
     this.getAdPlatforms(false);
     this.addOrEdit(this.data.option);
+    this.getFrequencies(false);
   }
 
   ngOnDestroy(): void {
@@ -46,8 +51,9 @@ export class AdvertisingPlatformComponent {
   addOrEdit(option: string): void {
     if (option == 'edit') {
       this.adPlatformForm.setValue({
-        id: this.data.colour.id,
-        name: this.data.colour.name,
+        id: this.data.adPlatform.id,
+        name: this.data.adPlatform.name,
+        frequencyId: this.data.adPlatform.frequencyId
       });
     } else if (option == 'add') {
     }
@@ -63,12 +69,12 @@ export class AdvertisingPlatformComponent {
     if (this.data.option == 'add') {
       console.log(event);
       const inputElement = event.target as HTMLInputElement;
-      this.exists$ = this.adPlatformService.doesNameExist(inputElement.value);
+      this.exists$ = this.nameCheckService.doesNameExist(inputElement.value, this.adPlatforms$);
     }
   }
 
   saveAdPlatform(): void {
-    console.log('Car Colour to Save => ', this.adPlatformForm.value);
+    console.log('Car Platform to Save => ', this.adPlatformForm.value);
     if (this.data.option == 'add') {
       this.addAdPlatform();
     } else if (this.data.option == 'edit') {
@@ -77,10 +83,10 @@ export class AdvertisingPlatformComponent {
   }
 
   addAdPlatform(): void {
-    let newColourObject = this.adPlatformForm.value;
-    delete newColourObject.id;
+    let newAdPlatformObject = this.adPlatformForm.value;
+    delete newAdPlatformObject.id;
     const addAdPlatformSub = this.adPlatformService
-      .addAdPlatform(newColourObject)
+      .addAdPlatform(newAdPlatformObject)
       .subscribe(
         (response: any) => {
           console.log('Response => ', response);
@@ -112,7 +118,7 @@ export class AdvertisingPlatformComponent {
   this.subscriptions.push(editAdPlatformSub);
   }
 
-  addEditPaymentFrequency(option: string, carMake: any): void {
+  addEditPaymentFrequency(option: string, frequency: any): void {
     console.log('Open Car Make! => ', option);
     const dialogRef = this.dialog.open(FrequencyComponent, {
       disableClose: true,
@@ -120,7 +126,7 @@ export class AdvertisingPlatformComponent {
       autoFocus: false,
       data: {
         option: option,
-        carMake: carMake,
+        frequency: frequency,
       },
     });
 
@@ -136,7 +142,9 @@ export class AdvertisingPlatformComponent {
   }
 
   getFrequencies(refresh: boolean): void {
-    
+    this.frequencies$ = this.frequencyService
+      .getFrequencies(refresh)
+      .pipe(map((info: any) => info.data));
   }
 
 }
