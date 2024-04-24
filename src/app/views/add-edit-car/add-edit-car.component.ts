@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CarModelComponent } from '../dialogs/car-model/car-model.component';
 import { ColourComponent } from '../dialogs/colour/colour.component';
 import { AdvertisingPlatformComponent } from '../dialogs/advertising-platform/advertising-platform.component';
+import { ClientComponent } from '../dialogs/client/client.component';
 
 @Component({
   selector: 'app-add-edit-car',
@@ -233,7 +234,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     });
 
     const colourdialogSub = dialogRef.afterClosed().subscribe((response) => {
-      console.log('Response (Car Model Dialog) => ', response);
+      console.log('Response (Car Colour Dialog) => ', response);
       if (response == 'refresh') {
         this.getColours(true);
       }
@@ -257,12 +258,34 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     const addPlatformdialogSub = dialogRef
       .afterClosed()
       .subscribe((response) => {
-        console.log('Response (Car Model Dialog) => ', response);
+        console.log('Response (Ad Platform Dialog) => ', response);
         if (response == 'refresh') {
           this.getAdPlatform(true);
         }
       });
 
     this.subscriptions.push(addPlatformdialogSub);
+  }
+
+  addEditClient(option: string, client: any): void {
+    console.log('Open Client Dialog ');
+    const dialogRef = this.dialog.open(ClientComponent, {
+      disableClose: true,
+      panelClass: '_dialogClient',
+      autoFocus: false,
+      data: {
+        option: option,
+        client: client,
+      },
+    });
+
+    const clientdialogSub = dialogRef.afterClosed().subscribe((response) => {
+      console.log('Response (Client Dialog) => ', response);
+      if (response == 'refresh') {
+        this.getClients(true);
+      }
+    });
+
+    this.subscriptions.push(clientdialogSub);
   }
 }

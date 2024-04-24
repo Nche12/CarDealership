@@ -266,10 +266,19 @@
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Client</mat-label>
                   <mat-select formControlName="clientId">
+                    <mat-option (click)="addEditClient('add', {})">
+                      Add Client
+                      <mat-icon class="material-icons-outlined"> add </mat-icon>
+                    </mat-option>
                     <mat-option
                       *ngFor="let client of clients$ | async | sort: 'name'"
                       [value]="client.id"
-                      >{{ client.name + " " + client.surname }}</mat-option
+                      >{{ client.name + " " + client.surname }} 
+                      <mat-icon
+                        class="material-icons-outlined editDropdownIcon mr-4"
+                        (click)="addEditClient('edit', client)"
+                        >mode</mat-icon >
+                      </mat-option
                     >
                   </mat-select>
                 </mat-form-field>

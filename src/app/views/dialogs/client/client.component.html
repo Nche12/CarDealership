@@ -1,1 +1,128 @@
-<p>client works!</p>
+<div class="matModalTitle">
+  <h5 class="m-0">Client</h5>
+  <button
+    mat-icon-button
+    type="button"
+    (click)="close()"
+    aria-label="Example icon button with a vertical three dot icon"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content class="py-3 px-4 m-0">
+  <form class="example-form form" [formGroup]="clientForm">
+    <div class="row">
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            placeholder="Name"
+            formControlName="name"
+            (input)="onNameChange($event)"
+            type="text"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="exists$ | async"
+          >{{ clientForm.value.name }} already exists!</mat-error
+        >
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Surname</mat-label>
+          <input
+            matInput
+            placeholder="Surname"
+            formControlName="surname"
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Id Number</mat-label>
+          <input
+            matInput
+            placeholder="Id Number"
+            formControlName="idNumber"
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Tel Number</mat-label>
+          <input
+            matInput
+            placeholder="Tel Number"
+            formControlName="pnoneNumber"
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            formControlName="email"
+            (input)="onNameChange($event)"
+            type="text"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="exists$ | async"
+          >{{ clientForm.value.email }} already exists!</mat-error
+        >
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Ad Platform</mat-label>
+          <mat-select formControlName="advertisingPlatformId">
+            <mat-option (click)="addEditAdPlatform('add', {})">
+              Add Advert Platform
+              <mat-icon class="material-icons-outlined"> add </mat-icon>
+            </mat-option>
+            <mat-option
+              *ngFor="let adPlatform of adPlatforms$ | async | sort: 'name'"
+              [value]="adPlatform.id"
+              >{{ adPlatform.name }}
+              <mat-icon
+                class="material-icons-outlined editDropdownIcon mr-4"
+                (click)="addEditAdPlatform('edit', adPlatform)"
+                >mode</mat-icon >
+              </mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div class="col-md-12 py-4 text-center">
+      <!-- <button mat-button (click)="check()"> CHECK</button> -->
+      <button
+        mat-button
+        type="button"
+        class="theme-btn mx-2"
+        (click)="saveClient()"
+        [disabled]="clientForm.invalid || (exists$ | async)"
+        [ngClass]="{ disabledBtn: clientForm.invalid || (exists$ | async) }"
+      >
+        <mat-icon class="material-icons-outlined">save</mat-icon>
+        Save
+      </button>
+
+      <!-- <button mat-button type="button" class="default-btn mx-2 text-grey" (click)="cancel()">
+                 <mat-icon class="material-icons-outlined">cancel</mat-icon>
+                  Cancel
+              </button> -->
+    </div>
+  </form>
+</mat-dialog-content>

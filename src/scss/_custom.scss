@@ -164,6 +164,19 @@ button.disabledBtn {
   }
 }
 
+._dialogClient {
+  width: 100% !important;
+  max-width: 800px !important;
+
+  .mat-dialog-container {
+    padding: 0;
+  }
+
+  @media only screen and (max-width: 767px) {
+    max-width: 95vw !important;
+  }
+}
+
 .option-with-icon {
   display: flex !important;
   justify-content: space-between !important;

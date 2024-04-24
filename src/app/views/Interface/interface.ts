@@ -84,14 +84,17 @@ export interface IAddCarMake {
   name: string;
 }
 
-export interface IClient {
-  id: number;
+export interface IAddClient {
   name: string;
   surname: string;
   idNumber: string;
   pnoneNumber: string;
   email: string;
   advertisingPlatformId: number;
+}
+
+export interface IClient extends IAddClient {
+  id: number;
 }
 
 export interface IAdPlatform extends IAddAdPlatform {

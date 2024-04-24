@@ -32,25 +32,25 @@ export class CarModelService {
 
   refreshCarModels(): Observable<IApiData[]> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
-    let API_URL = `${userApiUrl}/CarModels`;
+    const API_URL = `${userApiUrl}/CarModels`;
     return this.http.get<IApiData[]>(API_URL);
   }
 
   getCarModel(carModelId: number): Observable<IApiData> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
-    let API_URL = `${userApiUrl}/CarModels/${carModelId}`;
+    const API_URL = `${userApiUrl}/CarModels/${carModelId}`;
     return this.http.get<IApiData>(API_URL);
   }
 
   addCarModel(carObject: IAddCarModel): Observable<any> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
-    let API_URL = `${userApiUrl}/CarModels`;
+    const API_URL = `${userApiUrl}/CarModels`;
     return this.http.post<any>(API_URL, carObject);
   }
 
   updateCarModel(carObject: IEditCarModel): Observable<any> {
     const userApiUrl = window.sessionStorage.getItem('userApiUrl');
-    let API_URL = `${userApiUrl}/CarModels/${carObject.id}`;
+    const API_URL = `${userApiUrl}/CarModels/${carObject.id}`;
     return this.http.put<any>(API_URL, carObject);
   }
 
