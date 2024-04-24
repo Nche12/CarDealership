@@ -38,7 +38,10 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
       { value: 0, disabled: this.saveMode },
       Validators.required
     ),
-    colourId: new FormControl(null), //Need to add validation after backend adjustment
+    colourId: new FormControl(
+      { value: 0, disabled: this.saveMode },
+      Validators.required
+    ), //Need to add validation after backend adjustment
     mileage: new FormControl(0),
     comments: new FormControl(''),
     advertisingPlatformId: new FormControl({
@@ -176,6 +179,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     this.editMode = true;
     this.saveMode = false;
     this.carForm.get('carModelId')?.enable();
+    this.carForm.get('colourId')?.enable();
     this.carForm.get('advertisingPlatformId')?.enable();
     this.carForm.get('clientId')?.enable();
   }
@@ -184,6 +188,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     this.editMode = false;
     this.saveMode = true;
     this.carForm.get('carModelId')?.disable();
+    this.carForm.get('colourId')?.disable();
     this.carForm.get('advertisingPlatformId')?.disable();
     this.carForm.get('clientId')?.disable();
   }
@@ -201,7 +206,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
       autoFocus: false,
       data: {
         option: option,
-        carModel: carModel
+        carModel: carModel,
       },
     });
 
@@ -215,16 +220,15 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     this.subscriptions.push(carModeldialogSub);
   }
 
-
   addEditColour(option: string, colour: any): void {
-    console.log("Open colour model");
+    console.log('Open colour model');
     const dialogRef = this.dialog.open(ColourComponent, {
       disableClose: true,
       panelClass: '_dialog',
       autoFocus: false,
       data: {
         option: option,
-        colour: colour
+        colour: colour,
       },
     });
 
@@ -239,23 +243,25 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
   }
 
   addEditAdPlatform(option: string, adPlatform: any): void {
-    console.log("Open Ad Platform ");
+    console.log('Open Ad Platform ');
     const dialogRef = this.dialog.open(AdvertisingPlatformComponent, {
       disableClose: true,
       panelClass: '_dialog',
       autoFocus: false,
       data: {
         option: option,
-        adPlatform: adPlatform
+        adPlatform: adPlatform,
       },
     });
 
-    const addPlatformdialogSub = dialogRef.afterClosed().subscribe((response) => {
-      console.log('Response (Car Model Dialog) => ', response);
-      if (response == 'refresh') {
-        this.getAdPlatform(true);
-      }
-    });
+    const addPlatformdialogSub = dialogRef
+      .afterClosed()
+      .subscribe((response) => {
+        console.log('Response (Car Model Dialog) => ', response);
+        if (response == 'refresh') {
+          this.getAdPlatform(true);
+        }
+      });
 
     this.subscriptions.push(addPlatformdialogSub);
   }

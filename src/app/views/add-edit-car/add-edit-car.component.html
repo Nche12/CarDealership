@@ -52,7 +52,7 @@
                       <mat-icon class="material-icons-outlined"> add </mat-icon>
                     </mat-option>
                     <mat-option
-                      *ngFor="let carModel of carModels$ | async"
+                      *ngFor="let carModel of carModels$ | async | sort: 'name'"
                       [value]="carModel.id"
                       class="option-with-icon"
                     >
@@ -89,15 +89,16 @@
                       <mat-icon class="material-icons-outlined"> add </mat-icon>
                     </mat-option>
                     <mat-option
-                      *ngFor="let colour of colours$ | async"
+                      *ngFor="let colour of colours$ | async | sort: 'name'"
                       [value]="colour.id"
                       >{{ colour.name }}
                       <mat-icon
                         class="material-icons-outlined editDropdownIcon mr-4"
                         (click)="addEditColour('edit', colour)"
                         >mode</mat-icon >
-                      </mat-option
-                    >
+                      </mat-option>
+                      <!-- to stop selecting of mat-option when selecting edit (Need it for now) -->
+                      <!-- (click)="addEditColour('edit', colour); $event.stopPropagation();" -->
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -111,7 +112,7 @@
                       <mat-icon class="material-icons-outlined"> add </mat-icon>
                     </mat-option>
                     <mat-option
-                      *ngFor="let adPlatform of adPlatforms$ | async"
+                      *ngFor="let adPlatform of adPlatforms$ | async | sort: 'name'"
                       [value]="adPlatform.id"
                       >{{ adPlatform.name }}
                       <mat-icon
@@ -266,7 +267,7 @@
                   <mat-label>Client</mat-label>
                   <mat-select formControlName="clientId">
                     <mat-option
-                      *ngFor="let client of clients$ | async"
+                      *ngFor="let client of clients$ | async | sort: 'name'"
                       [value]="client.id"
                       >{{ client.name + " " + client.surname }}</mat-option
                     >

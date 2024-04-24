@@ -32,6 +32,7 @@ import { ColourComponent } from './views/dialogs/colour/colour.component';
 import { ClientComponent } from './views/dialogs/client/client.component';
 import { AdvertisingPlatformComponent } from './views/dialogs/advertising-platform/advertising-platform.component';
 import { FrequencyComponent } from './views/dialogs/frequency/frequency.component';
+import { SortPipe } from './views/Pipes/Sort/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { FrequencyComponent } from './views/dialogs/frequency/frequency.componen
     ColourComponent,
     ClientComponent,
     AdvertisingPlatformComponent,
-    FrequencyComponent
+    FrequencyComponent,
+    SortPipe
   ],
   imports: [
     BrowserModule,
