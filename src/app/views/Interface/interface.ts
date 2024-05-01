@@ -2,7 +2,8 @@ export interface IInventory {
   id: number;
   carModelId: number;
   carModel: ICarModel;
-  colour: string;
+  carColourId: number;
+  carColour: IColour;
   mileage: number;
   comments: string;
   advertisingPlatformId: number;
@@ -19,6 +20,9 @@ export interface IInventory {
   userId: number;
   user: IUser;
   isSold: boolean;
+  year: number;
+  sellingPrice: number;
+  vinNumber: string;
 }
 
 export interface IUser {

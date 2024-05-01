@@ -26,6 +26,15 @@
           <mat-icon class="material-icons-outlined">mode</mat-icon>
           Edit
         </button>
+
+        <button
+          mat-raised-button
+          class="default-btn text-uppercase m-1 mr-3"
+          (click)="checkInvalidControl()"
+        >
+          <mat-icon class="material-icons-outlined">mode</mat-icon>
+          CHECK ERROR CONTROL
+        </button>
       </div>
     </div>
 
@@ -45,6 +54,18 @@
             <div class="row">
               <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Vin Number</mat-label>
+                  <input
+                    matInput
+                    placeholder="Vin Number"
+                    formControlName="vinNumber"
+                    [readonly]="saveMode"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Car Model</mat-label>
                   <mat-select formControlName="carModelId">
                     <mat-option (click)="addEditCarModel('add', {})">
@@ -52,7 +73,9 @@
                       <mat-icon class="material-icons-outlined"> add </mat-icon>
                     </mat-option>
                     <mat-option
-                      *ngFor="let carModel of carModels$ | async | sort: 'name'"
+                      *ngFor="
+                        let carModel of carModels$ | async | sort : 'name'
+                      "
                       [value]="carModel.id"
                       class="option-with-icon"
                     >
@@ -60,11 +83,42 @@
                       <mat-icon
                         class="material-icons-outlined editDropdownIcon mr-4"
                         (click)="addEditCarModel('edit', carModel)"
-                        >mode</mat-icon >
+                        >mode</mat-icon
+                      >
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
+
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Year</mat-label>
+                  <mat-select formControlName="year">
+                    <mat-option
+                      *ngFor="let year of years"
+                      [value]="year"
+                      class="option-with-icon"
+                    >
+                      {{ year }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Selling Price</mat-label>
+                  <input
+                    matInput
+                    placeholder="Selling Price"
+                    formControlName="sellingPrice"
+                    type="number"
+                    min="0"
+                    [readonly]="saveMode"
+                  />
+                </mat-form-field>
+              </div>
+
               <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Mileage</mat-label>
@@ -83,22 +137,23 @@
               <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Car Colour</mat-label>
-                  <mat-select formControlName="colourId">
+                  <mat-select formControlName="carColourId">
                     <mat-option (click)="addEditColour('add', {})">
                       Add Car Colour
                       <mat-icon class="material-icons-outlined"> add </mat-icon>
                     </mat-option>
                     <mat-option
-                      *ngFor="let colour of colours$ | async | sort: 'name'"
+                      *ngFor="let colour of colours$ | async | sort : 'name'"
                       [value]="colour.id"
                       >{{ colour.name }}
                       <mat-icon
                         class="material-icons-outlined editDropdownIcon mr-4"
                         (click)="addEditColour('edit', colour)"
-                        >mode</mat-icon >
-                      </mat-option>
-                      <!-- to stop selecting of mat-option when selecting edit (Need it for now) -->
-                      <!-- (click)="addEditColour('edit', colour); $event.stopPropagation();" -->
+                        >mode</mat-icon
+                      >
+                    </mat-option>
+                    <!-- to stop selecting of mat-option when selecting edit (Need it for now) -->
+                    <!-- (click)="addEditColour('edit', colour); $event.stopPropagation();" -->
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -112,15 +167,17 @@
                       <mat-icon class="material-icons-outlined"> add </mat-icon>
                     </mat-option>
                     <mat-option
-                      *ngFor="let adPlatform of adPlatforms$ | async | sort: 'name'"
+                      *ngFor="
+                        let adPlatform of adPlatforms$ | async | sort : 'name'
+                      "
                       [value]="adPlatform.id"
                       >{{ adPlatform.name }}
                       <mat-icon
                         class="material-icons-outlined editDropdownIcon mr-4"
                         (click)="addEditAdPlatform('edit', adPlatform)"
-                        >mode</mat-icon >
-                      </mat-option
-                    >
+                        >mode</mat-icon
+                      >
+                    </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -149,6 +206,7 @@
                   ></mat-datepicker>
                 </mat-form-field>
               </div>
+
               <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Sold Date</mat-label>
@@ -271,15 +329,15 @@
                       <mat-icon class="material-icons-outlined"> add </mat-icon>
                     </mat-option>
                     <mat-option
-                      *ngFor="let client of clients$ | async | sort: 'name'"
+                      *ngFor="let client of clients$ | async | sort : 'name'"
                       [value]="client.id"
-                      >{{ client.name + " " + client.surname }} 
+                      >{{ client.name + " " + client.surname }}
                       <mat-icon
                         class="material-icons-outlined editDropdownIcon mr-4"
                         (click)="addEditClient('edit', client)"
-                        >mode</mat-icon >
-                      </mat-option
-                    >
+                        >mode</mat-icon
+                      >
+                    </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>

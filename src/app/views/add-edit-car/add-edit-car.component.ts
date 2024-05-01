@@ -18,6 +18,9 @@ import { CarModelComponent } from '../dialogs/car-model/car-model.component';
 import { ColourComponent } from '../dialogs/colour/colour.component';
 import { AdvertisingPlatformComponent } from '../dialogs/advertising-platform/advertising-platform.component';
 import { ClientComponent } from '../dialogs/client/client.component';
+// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+// import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-add-edit-car',
@@ -39,7 +42,7 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
       { value: 0, disabled: this.saveMode },
       Validators.required
     ),
-    colourId: new FormControl(
+    carColourId: new FormControl(
       { value: 0, disabled: this.saveMode },
       Validators.required
     ), //Need to add validation after backend adjustment
@@ -63,11 +66,18 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     commissionAmount: new FormControl(null),
     userId: new FormControl(2, Validators.required),
     isSold: new FormControl(false),
+    year: new FormControl(
+      { value: 0, disabled: this.saveMode },
+      Validators.required
+    ),
+    sellingPrice: new FormControl(0),
+    vinNumber: new FormControl(''),
   });
 
   public title: string = '';
   public carId!: number;
   public subscriptions: Subscription[] = [];
+  public years: number[] = [];
 
   constructor(
     private carsService: CarsService,
@@ -87,10 +97,23 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     this.getClients(true);
     this.getAdPlatform(true);
     this.getColours(true);
+    this.getYears();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: any) => sub.unsubscribe());
+  }
+
+  getYears() {
+    const currentYear: number = new Date().getFullYear();
+    console.log('Current Year => ', currentYear);
+    for (let i: number = 1700; i <= currentYear + 1; i++) {
+      this.years.push(i);
+    }
+
+    // Sort the years array in descending order
+    this.years.sort((a, b) => b - a);
+    console.log('Years => ', this.years);
   }
 
   getCarModels(refresh: boolean): void {
@@ -123,6 +146,15 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     }
   }
 
+  checkInvalidControl() {
+    Object.keys(this.carForm.controls).forEach((key) => {
+      const controlErrors = this.carForm.get(key)?.errors;
+      if (controlErrors != null) {
+        console.log(`Control "${key}" is invalid. Errors: `, controlErrors);
+      }
+    });
+  }
+
   getCar(carId: number): void {
     const carsSub = this.carsService.getCar(carId).subscribe((info: any) => {
       this.carForm.setValue({
@@ -143,6 +175,9 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
         commissionAmount: info.data.commissionAmount,
         userId: info.data.userId,
         isSold: info.data.isSold,
+        year: info.data.year,
+        sellingPrice: info.data.sellingPrice,
+        vinNumber: info.data.vinNumber,
       });
       console.log('Form Value Edit => ', this.carForm.value);
     });
@@ -180,18 +215,20 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
     this.editMode = true;
     this.saveMode = false;
     this.carForm.get('carModelId')?.enable();
-    this.carForm.get('colourId')?.enable();
+    this.carForm.get('carColourId')?.enable();
     this.carForm.get('advertisingPlatformId')?.enable();
     this.carForm.get('clientId')?.enable();
+    this.carForm.get('year')?.enable();
   }
 
   public disableForm(): void {
     this.editMode = false;
     this.saveMode = true;
     this.carForm.get('carModelId')?.disable();
-    this.carForm.get('colourId')?.disable();
+    this.carForm.get('carColourId')?.disable();
     this.carForm.get('advertisingPlatformId')?.disable();
     this.carForm.get('clientId')?.disable();
+    this.carForm.get('year')?.disable();
   }
 
   editInventory() {

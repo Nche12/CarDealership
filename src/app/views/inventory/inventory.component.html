@@ -23,8 +23,11 @@
                         <span (click)="editInventory('edit',data)" class="link">{{data.carModel.name}}</span>
                     </ng-template>
                 </e-column>
-                <e-column field='colour' headerText='Colour' [filter]='filter' minWidth='140'></e-column>
-                <e-column field='mileage' headerText='mileage' [filter]='filter' width='180'></e-column>
+                <e-column field='carColour.name' headerText='Colour' [filter]='filter' minWidth='140'></e-column>
+                <e-column field='year' headerText='Year' [filter]='filter' width='180'></e-column>
+                <e-column field='sellingPrice' headerText='Selling Price' [filter]='filter' width='180'></e-column>
+                <e-column field='vinNumber' headerText='Vin Number' [filter]='filter' width='180'></e-column>
+                <e-column field='mileage' headerText='Mileage' [filter]='filter' width='180'></e-column>
                 <e-column field='comments' headerText='Comments' [filter]='filter' minWidth='140'></e-column>
                 <e-column field='advertisingPlatform.name' headerText='Ad Platform' [filter]='filter' minWidth='140'></e-column>
                 <e-column field='broughtDate' headerText='Brought Date' [filter]='filter' minWidth='140' [visible]="false"></e-column>
