@@ -15,6 +15,28 @@
     <div class="row">
       <div class="col-sm-6">
         <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Contact</mat-label>
+          <mat-select formControlName="contactId">
+            <mat-option (click)="addEditContact('add', {})">
+              Add Contact
+              <mat-icon class="material-icons-outlined"> add </mat-icon>
+            </mat-option>
+            <mat-option
+              *ngFor="let contact of contacts$ | async | sort : 'displayName'"
+              [value]="contact.id"  (click)="selectedContact(contact)"
+              >{{ contact.displayName }}
+              <mat-icon
+                class="material-icons-outlined editDropdownIcon mr-4"
+                (click)="addEditContact('edit', contact)"
+                >mode</mat-icon
+              >
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="w-100">
           <mat-label>Name</mat-label>
           <input
             matInput
@@ -90,19 +112,18 @@
               <mat-icon class="material-icons-outlined"> add </mat-icon>
             </mat-option>
             <mat-option
-              *ngFor="let adPlatform of adPlatforms$ | async | sort: 'name'"
+              *ngFor="let adPlatform of adPlatforms$ | async | sort : 'name'"
               [value]="adPlatform.id"
               >{{ adPlatform.name }}
               <mat-icon
                 class="material-icons-outlined editDropdownIcon mr-4"
                 (click)="addEditAdPlatform('edit', adPlatform)"
-                >mode</mat-icon >
-              </mat-option
-            >
+                >mode</mat-icon
+              >
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-
     </div>
 
     <div class="col-md-12 py-4 text-center">

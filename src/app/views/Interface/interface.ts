@@ -95,10 +95,86 @@ export interface IAddClient {
   pnoneNumber: string;
   email: string;
   advertisingPlatformId: number;
+  contactId: number;
 }
 
 export interface IClient extends IAddClient {
   id: number;
+  advertisingPlatform: IAdvertisingPlatform;
+}
+
+export interface Root {
+  id: number
+  name: string
+  surname: string
+  idNumber: string
+  phoneNumber: string
+  email: string
+  contactId: number
+  contact: IContact
+  advertisingPlatformId: number
+  advertisingPlatform: IAdvertisingPlatform
+}
+
+export interface IContact {
+  id: number
+  forenames: string
+  surname: string
+  title: string
+  displayName: string
+  bankAccountId: number
+  bankAccount: IBankAccount
+  residentialAddress: string
+  postalAddress: string
+  idNumber: string
+  telMobile: string
+  telWork: string
+  telHome: string
+  email: string
+  isCompany: boolean
+  company: string
+  companyRegNum: string
+  companyVatNum: string
+  imageUrl: string
+  imageFilename: string
+  comments: string
+  website: string
+  dateOfBirth: string
+}
+
+export interface IBankAccount {
+  id: number
+  bankId: number
+  contactId: number
+  bankName: string
+  displayName: string
+  bankType: string
+  bankBranchName: string
+  bankBranchCode: string
+  bankAccountNum: string
+  bankAccountHolder: string
+  bankAccountTypeId: number
+  bankAccountType: string
+  bankNotificationEmailAddress: string
+  bankNotificationEmailSubject: string
+  bankNotificationSmsCode: string
+  bankNotificationSmsNumber: string
+  bankNotificationFaxCode: string
+  bankNotificationFaxNumber: string
+  paymentReference: string
+  entityNumber: string
+  iban: string
+  swiftBic: string
+  isPrimary: boolean
+  isSelected: boolean
+}
+
+export interface IAdvertisingPlatform {
+  id: number
+  name: string
+  paymentAmount: number
+  frequencyId: number
+  frequency: IFrequency
 }
 
 export interface IAdPlatform extends IAddAdPlatform {

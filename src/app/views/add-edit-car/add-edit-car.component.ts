@@ -318,11 +318,13 @@ export class AddEditCarComponent implements OnInit, OnDestroy {
 
     const clientdialogSub = dialogRef.afterClosed().subscribe((response) => {
       console.log('Response (Client Dialog) => ', response);
-      if (response == 'refresh') {
+      if (response.refresh == 'refresh') {
         this.getClients(true);
+        this.carForm.patchValue({
+          clientId: response.data.id,
+        });
       }
     });
-
     this.subscriptions.push(clientdialogSub);
   }
 }

@@ -1,12 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { NameCheckService } from '../../Services/NameCheck/name-check.service';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { ClientService } from '../../Services/Client/client.service';
-import { IAdPlatform, IClient } from '../../Interface/interface';
+import { IAdPlatform, IClient, IContact } from '../../Interface/interface';
 import { Observable, Subscription, map } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdPlatformService } from '../../Services/AdPlatform/ad-platform.service';
 import { AdvertisingPlatformComponent } from '../advertising-platform/advertising-platform.component';
+import { ContactService } from '../contact/contact.service';
 
 @Component({
   selector: 'app-client',
@@ -18,6 +23,7 @@ export class ClientComponent {
   public subscriptions: Subscription[] = [];
   public exists$!: Observable<boolean>;
   public adPlatforms$!: Observable<IAdPlatform[]>;
+  public contacts$!: Observable<IContact[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -26,6 +32,7 @@ export class ClientComponent {
     private clientService: ClientService,
     private nameCheckService: NameCheckService,
     private adPlatformService: AdPlatformService,
+    private contactService: ContactService
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +40,7 @@ export class ClientComponent {
     this.getClients(false);
     this.addOrEdit(this.data.option);
     this.getAdPlatform(true);
+    this.getContacts(true);
   }
 
   ngOnDestroy(): void {
@@ -46,6 +54,7 @@ export class ClientComponent {
     pnoneNumber: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     advertisingPlatformId: new FormControl(0, Validators.required),
+    contactId: new FormControl('', Validators.required),
   });
 
   close(): void {
@@ -62,6 +71,7 @@ export class ClientComponent {
         pnoneNumber: this.data.client.pnoneNumber,
         email: this.data.client.email,
         advertisingPlatformId: this.data.client.advertisingPlatformId,
+        contactId: this.data.client.contactId,
       });
     } else if (option == 'add') {
     }
@@ -70,6 +80,12 @@ export class ClientComponent {
   getClients(refresh: boolean): void {
     this.clients$ = this.clientService
       .getClients(refresh)
+      .pipe(map((info: any) => info.data));
+  }
+
+  getContacts(refresh: boolean): void {
+    this.contacts$ = this.contactService
+      .getContacts(refresh)
       .pipe(map((info: any) => info.data));
   }
 
@@ -103,7 +119,11 @@ export class ClientComponent {
       .subscribe(
         (response: any) => {
           console.log('Save (add) response => ', response);
-          this.dialogRef.close('refresh');
+          const res = {
+            refresh: 'refresh',
+            data: response.data,
+          };
+          this.dialogRef.close(res);
         }
         //   ,
         // error => {
@@ -120,7 +140,11 @@ export class ClientComponent {
       .subscribe(
         (response: any) => {
           console.log('Client (Edit) response => ', response);
-          this.dialogRef.close('refresh');
+          const res = {
+            refresh: 'refresh',
+            data: response.data,
+          };
+          this.dialogRef.close(res);
         }
         // ,
         // error => {
@@ -161,4 +185,20 @@ export class ClientComponent {
       .pipe(map((info: any) => info.data));
   }
 
+  addEditContact(option: string, contact: any): void {
+    console.log('Option => ', option);
+    console.log('Contact => ', contact);
+  }
+
+  selectedContact(contact: IContact) {
+    console.log('Contact => ', contact);
+    this.clientForm.patchValue({
+      id: contact.id,
+      name: contact.forenames,
+      surname: contact.surname,
+      idNumber: contact.idNumber,
+      pnoneNumber: contact.telMobile,
+      email: contact.email,
+    });
+  }
 }
